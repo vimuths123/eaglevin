@@ -1,0 +1,203 @@
+{% extends "::admin_base.html.twig" %}
+
+{% block title %}EagleAdminBundle:products:add{% endblock %}
+
+{% block body %}
+    <style>
+        .tinp textarea:focus, .tinp input[type="text"]:focus, .tinp input[type="password"]:focus, .tinp input[type="datetime"]:focus, .tinp input[type="datetime-local"]:focus, .tinp input[type="date"]:focus, .tinp input[type="month"]:focus, input[type="time"]:focus, .tinp input[type="week"]:focus, .tinp input[type="number"]:focus, .tinp input[type="email"]:focus, .tinp input[type="url"]:focus, .tinp input[type="search"]:focus, .tinp input[type="tel"]:focus, .tinp input[type="color"]:focus, .tinp .uneditable-input:focus {
+            border: none !important;
+            box-shadow: none;
+        }
+
+        .tinp .valid{
+            border: none !important;
+        }
+    </style>
+    <!--Body content-->
+    <div id="content" class="clearfix" ng-app="update_category_app">
+        <div class="contentwrapper" ng-controller="updateController"><!--Content wrapper-->
+            <!--Success message-->
+            <div class="ui-pnotify " style="width: 300px; right: 25px; top: 25px; opacity: 0.95; cursor: auto;" ng-show="cat_success">
+                <div class="alert ui-pnotify-container alert-success ui-pnotify-shadow" style="min-height: 16px;">
+                    <div class="ui-pnotify-icon"><span class="picon icon16 iconic-icon-check-alt white"></span></div>
+                    <div class="ui-pnotify-closer closer" style="cursor: pointer; margin-right: -6px; margin-top: -8px;" ng-click="hide_success()"><span class="icon-remove"></span></div>
+                    <div class="ui-pnotify-sticker" style="cursor: pointer; visibility: hidden; display: none;"><span class="icon-pause"></span></div>
+                    <h4 class="ui-pnotify-title">Category updated</h4>
+                    <div class="ui-pnotify-text">Category updated successfully.</div>
+                </div>
+            </div>
+
+            <div class="heading">
+
+                <h3>Add category</h3>                    
+
+                <div class="resBtnSearch">
+                    <a href="#"><span class="icon16 brocco-icon-search"></span></a>
+                </div>
+
+                <div class="search">
+
+                    <form id="searchform" action="search.html" />
+                    <input type="text" id="tipue_search_input" class="top-search" placeholder="Search here ..." />
+                    <input type="submit" id="tipue_search_button" class="search-btn" value="" />
+                    </form>
+
+                </div><!-- End search -->
+
+                <ul class="breadcrumb">
+                    <li>You are here:</li>
+                    <li>
+                        <a href="#" class="tip" title="back to dashboard">
+                            <span class="icon16 icomoon-icon-screen"></span>
+                        </a> 
+                        <span class="divider">
+                            <span class="icon16 icomoon-icon-arrow-right"></span>
+                        </span>
+                    </li>
+                    <li class="active">Forms</li>
+                </ul>
+
+            </div><!-- End .heading-->
+
+            <!-- Build page from here: Usual with <div class="row-fluid"></div> -->
+            <form class="add_category" method="post" enctype="multipart/form-data">
+                <input type="hidden" ng-model="addForm.id" ng-init="addForm.id = '{{category.id}}'"/>
+                <div class="row-fluid">
+
+                    <div class="span6">
+
+                        <div class="box">
+
+                            <div class="title">
+
+                                <h4>
+                                    <span class="icon16 brocco-icon-grid"></span>
+                                    <span>Category details</span>
+                                </h4>
+
+                            </div>
+                            <div class="content">
+                                <div class="form-horizontal" novalidate="novalidate" action="">
+                                    <div class="form-row row-fluid">
+                                        <div class="span12">
+                                            <div class="row-fluid">
+                                                <label class="form-label span4" for="normal" class="pro_title">Category Title</label>
+                                                <input class="span8" name="cat_title" type="text" ng-model="addForm.catTitle" ng-init="addForm.catTitle = '{{category.catTitle}}'"/>
+                                            </div>
+                                        </div>
+                                    </div>         
+
+                                    <div class="form-row row-fluid">
+                                        <div class="span12">
+                                            <div class="row-fluid">
+                                                <label class="form-label span4" for="textarea">Category description</label>
+                                                <textarea class="span8" rows="3" ng-model="addForm.catDesc" ng-init="addForm.catDesc = '{{category.catDesc}}'"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-actions">
+                                        <div class="pull-right">
+                                            <button id="add_btn" class="btn btn-info" type="submit" ng-click="save()">Add category</button>
+                                            <button class="btn" ng-click="clear()" type="button">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- End .box -->
+
+                    </div><!-- End .span6 -->
+
+                    <div class="span6">
+
+                        <div class="box">
+
+                            <div class="title">
+
+                                <h4>
+                                    <span class="icon16 brocco-icon-grid"></span>
+                                    <span>Related categories</span>
+                                </h4>
+
+                            </div>
+                            <div class="content">
+                                <div class="form-horizontal">
+                                    <div class="form-row row-fluid">
+                                        <div class="span12">
+                                            <div class="row-fluid">
+                                                <label class="form-label span4" for="checkboxes">Related Categories</label>
+                                                <div class="span8 tinp" style="margin-left: 0px;">
+                                                    <div>
+                                                        <input ng-init='relateds = {{related_cats}}' type="text" id="update-input-local" class="inp" name="blah"/>
+                                                        {#                                                        <input class="btn btn-info" type="button" value="Submit" />      #}
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- End .box -->
+
+                    </div><!-- End .span6 -->
+
+
+
+                </div><!-- End .row-fluid -->
+
+                <div class="row-fluid">
+
+                    <div class="span12">
+
+                        <div class="box">
+
+                            <div class="title">
+                                <h4>    
+                                    <span>Category image</span>
+                                </h4>
+                            </div>
+
+                            <div class="content">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        {% if cat_img %}                                            
+                                            {% for img in cat_img %}
+                                                {% set extention = img.ImageName|split('.') %}
+                                                {% if img.ImageName|imgFormat == 1 %}
+                                                    <img class="this" src="{{ asset('uploads/categories/' ~ category.id ~ 'img' ~ img.ImageName|imgFormat ~'.'~ extention[1]) }}" data-src="holder.js/100%x100%" alt="...">
+                                                {% endif %}
+                                            {% endfor %} 
+                                        {% endif %}       
+                                        <img data-src="holder.js/100%x100%" alt="...">
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                    <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new" style="padding-right: 10px;">
+                                                Select image
+                                            </span>
+                                            <span class="fileinput-exists" style="padding-right: 10px;">
+                                                Change
+                                            </span>
+                                            <input type="file" name="1" id="image_up"></span>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- End .box -->
+
+                    </div><!-- End .span6 -->
+
+                </div><!-- End .row-fluid -->
+
+            </form>
+        </div><!-- End contentwrapper -->
+    </div><!-- End #content -->
+</div>
+{% endblock %}
+

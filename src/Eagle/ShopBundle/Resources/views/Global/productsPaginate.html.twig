@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-US">  
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    {#    <script src="bootstrap-paginator.js"></script>#}
+
+    {% javascripts
+             'bundles/eagleshop/js/viPaginator.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        angular.module('docsSimpleDirective', ['viPaginator'], function ($interpolateProvider) {
+            $interpolateProvider.startSymbol('[[');
+            $interpolateProvider.endSymbol(']]');
+        }).controller('Controller', ['$scope', function ($scope) {
+                $scope.NoItems = '1';
+                $scope.paginateItems = [{"firstName": "Ruhaim", "lastName": "Izmeth"},
+                    {"firstName": "Nuwan", "lastName": "Chamara"},
+                    {"firstName": "Tharindu", "lastName": "Chandrasiri"},
+                    {"firstName": "Kasun", "lastName": "Dharshana"},
+                    {"firstName": "Suresh", "lastName": "Eranda"},
+                    {"firstName": "Damitha", "lastName": "Rathnakara"},
+                    {"firstName": "Susith", "lastName": "Prasanna"},
+                    {"firstName": "Danushka", "lastName": "Thushara"},
+                    {"firstName": "Dulan", "lastName": "Sudasinghe"},
+                    {"firstName": "Dimuth", "lastName": "Vithana"},
+                    {"firstName": "Sanjaya", "lastName": "Ruwan"}];
+            }]);
+
+    </script>
+
+    <body ng-app="docsSimpleDirective">
+
+        <div ng-controller="Controller">
+            <select ng-model="NoItems">
+                <option value="1">1 item</option>
+                <option value="2">2 item</option>
+                <option value="3">3 item</option>
+            </select>
+
+            {# <div class="container">
+                 <div class="row" ng-repeat="item in users" style="border: 1px solid black">
+                     <div class="col-lg-12">
+                         <p style="margin: 10px 0;">[[ item.firstName ]] [[ item.lastName ]]</p>
+                     </div>                   
+                 </div>                    
+             </div>#}
+
+            {#            for ajax#}
+            <div class="container">
+                <div class="row" ng-repeat="item in users" style="border: 1px solid black">
+                    <div class="col-lg-12">
+                        <p style="margin: 10px 0;">Title - [[ item.product_title ]]</p>
+                        <p style="margin: 10px 0;">Decription - [[ item.description ]]</p>
+                    </div>                   
+                </div>                    
+            </div>
+            
+            <input type="text" ng-model="search">
+            
+            <!--Without aJax-->
+            {#            <vi-paginator items-array="paginateItems" per-page="NoItems" new-array="users"></vi-paginator>#}
+            <!--With aJax-->
+            <vi-paginator per-page="NoItems" new-array="users" count-url="[['http://localhost:8000/products/searchCount']]" ajax-url="[['http://localhost:8000/products/json_searchPaginate']]" ajax-search="search"></vi-paginator>
+            <span ng-bind-html="myContent"></span>            
+        </div>
+    </body>
+</html> 
+
+
+

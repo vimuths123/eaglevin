@@ -1,0 +1,421 @@
+<?php
+
+namespace Eagle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Products
+ *
+ * @ORM\Table(name="products")
+ * @ORM\Entity
+ */
+class Products
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="product_title", type="string", length=400, nullable=false)
+     */
+    private $productTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=400, nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $price;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="category", type="integer", nullable=false)
+     */
+    private $category;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="store_id", type="integer", nullable=false)
+     */
+    private $storeId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stock", type="integer", nullable=false)
+     */
+    private $stock;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="isfeatured", type="integer", nullable=false)
+     */
+    private $isfeatured;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="online", type="integer", nullable=false)
+     */
+    private $online;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+
+    /**
+     * Set productTitle
+     *
+     * @param string $productTitle
+     * @return Products
+     */
+    public function setProductTitle($productTitle)
+    {
+        $this->productTitle = $productTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get productTitle
+     *
+     * @return string 
+     */
+    public function getProductTitle()
+    {
+        return $this->productTitle;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Products
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return Products
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set category
+     *
+     * @param integer $category
+     * @return Products
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return integer 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set storeId
+     *
+     * @param integer $storeId
+     * @return Products
+     */
+    public function setStoreId($storeId)
+    {
+        $this->storeId = $storeId;
+
+        return $this;
+    }
+
+    /**
+     * Get storeId
+     *
+     * @return integer 
+     */
+    public function getStoreId()
+    {
+        return $this->storeId;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Products
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set stock
+     *
+     * @param integer $stock
+     * @return Products
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Get stock
+     *
+     * @return integer 
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * Set isfeatured
+     *
+     * @param integer $isfeatured
+     * @return Products
+     */
+    public function setIsfeatured($isfeatured)
+    {
+        $this->isfeatured = $isfeatured;
+
+        return $this;
+    }
+
+    /**
+     * Get isfeatured
+     *
+     * @return integer 
+     */
+    public function getIsfeatured()
+    {
+        return $this->isfeatured;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Products
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Products
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set online
+     *
+     * @param integer $online
+     * @return Products
+     */
+    public function setOnline($online)
+    {
+        $this->online = $online;
+
+        return $this;
+    }
+
+    /**
+     * Get online
+     *
+     * @return integer 
+     */
+    public function getOnline()
+    {
+        return $this->online;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * @var integer
+     */
+    private $quantity;
+
+    /**
+     * @var integer
+     */
+    private $sold;
+
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return Products
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set sold
+     *
+     * @param integer $sold
+     * @return Products
+     */
+    public function setSold($sold)
+    {
+        $this->sold = $sold;
+
+        return $this;
+    }
+
+    /**
+     * Get sold
+     *
+     * @return integer 
+     */
+    public function getSold()
+    {
+        return $this->sold;
+    }
+}

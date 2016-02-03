@@ -1,0 +1,230 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}EagleShopBundle:Global:products{% endblock %}
+
+{% block body %}
+    <style>
+        .addressDev{
+            border: 1px solid #e7ded5;
+            display: inline-block;
+            padding: 17px;
+            width: 95.2%;
+        }
+        .addressDev label{
+            display: inline-block;
+            font-size: 13px;
+            padding: 10px 0;
+        }
+
+        label.error {
+            padding: 0 !important;
+        }
+
+        .countryDev label.error {
+            margin-left: 124px;
+            width: 200px;
+        }
+    </style>
+
+    <div class="section_container">
+        <!--Mid Section Starts-->
+        <section>
+            <div class="full_page">
+                <h1>Checkout</h1>
+                <!--CHECKOUT STEPS STARTS-->
+                <form action="" method="post" id="checkoutForm">
+                    <div class="checkout_steps">
+                        <ol id="checkoutSteps">
+                            <li class="section allow active" id="billing">
+                                <div class="step-title"> <span class="number">1:</span>
+                                    <h2>Billing Address</h2>
+                                </div>
+                                <div id="checkout-step-login">
+                                    <div class="col2-set">                                    
+                                        <div class="col-1">
+                                            <!--<form method="post" id="login-form">-->
+                                            <fieldset>                                                
+                                                <ul class="form-list">
+                                                    <li>
+                                                        <label class="required"><em>*</em>First name</label>
+                                                        <div class="input-box">
+                                                            <input type="text" name="first_name" value="" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required"><em>*</em>Last name</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="last_name" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required"><em>*</em>Email</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="email" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required"><em>*</em>Country</label>
+                                                        <div class="input-box countryDev" style="margin-right: 8px">
+                                                            <select class="input-text" name="country_code">
+                                                                <option value="">Seclect a country</option>
+                                                                <option value="LK">Sri lanka</option>
+                                                                <option value="IN">India</option>
+                                                                <option value="TH">Thailand</option>
+                                                                <option value="MY">Malasia</option>
+                                                            </select> 
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <br/>
+                                                <br/>
+                                            </fieldset>
+                                            <!--</form>-->
+                                        </div>
+                                        <div class="col-1">
+                                            <fieldset>                                                
+                                                <ul class="form-list">
+                                                    <li>
+                                                        <label class="required"><em>*</em>Phone</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="H_PhoneNumber" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required"><em>*</em>Address</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="address" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required"><em>*</em>City</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="city" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required"><em>*</em>Post code</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="zip" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <br/>
+                                                <br/>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="active section allow" id="shipping">
+                                <div class="step-title"> <span class="number">2:</span>
+                                    <h2>Shipping Address</h2>
+                                </div>
+                                <div class="addressDev">
+                                    <div class="col2-set">                                    
+                                        <div class="col-1">
+                                            <fieldset>                                                
+                                                <ul class="form-list">
+                                                    <li>
+                                                        <label class="required" for="login-email"><em>*</em>Address</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="adderss_2" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required" for="login-password"><em>*</em>Country</label>
+                                                        <div class="input-box countryDev">
+                                                            <select class="input-text" style="margin-right: 8px" name="country_2">
+                                                                <option value="">Seclect a country</option>
+                                                                <option value="sri_lanka">Sri lanka</option>
+                                                                <option value="india">India</option>
+                                                                <option value="thailand">Thailand</option>
+                                                                <option value="malasia">Malasia</option>
+                                                            </select> 
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <br/>
+                                                <br/>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-1">
+                                            <fieldset>                                                
+                                                <ul class="form-list">
+                                                    <li>
+                                                        <label class="required" for="login-email"><em>*</em>City</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="city_2" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <label class="required" for="login-email"><em>*</em>Postcode / Zip</label>
+                                                        <div class="input-box">
+                                                            <input type="text" value="" name="postcode" class="input-text" style="margin-right: 8px">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="buttons-set" style="margin-top: 20px;">
+                                                            <button class="button brown_btn" type="submit" style="padding: 8px 21px;">Place Order</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <br/>
+                                                <br/>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            {#<li>
+                                <div class="step-title"> <span class="number">3</span>
+                                    <h2>Shipping Information</h2>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="step-title"> <span class="number">4</span>
+                                    <h2>Shipping Method</h2>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="step-title"> <span class="number">5</span>
+                                    <h2>Order Preview</h2>
+                                </div>
+                            </li>#}
+                        </ol>
+                    </div>
+                </form>
+                <!--CHECKOUT STEPS ENDS-->
+                <div class="col_right">
+                    <div class="block-progress">
+                        <div class="block-title">Your Checkout Progress</div>
+                        <ul>
+                            <li><a href="#billing">Billing Address</a></li>
+                            <li><a href="#shipping">Shipping Address</a></li>
+                        </ul>
+                    </div>
+                    <div class="right_promo">
+                        <img src="images/side_promo_banner.jpg">
+                    </div>
+                </div>
+            </div>
+            <!--Newsletter_subscribe Starts-->
+            <div class="subscribe_block">
+                <div class="find_us">
+                    <h3>Find us on</h3>
+                    <a class="twitter" href="#"></a> <a class="facebook" href="#"></a> <a class="rss" href="#"></a> </div>
+                <div class="subscribe_nl">
+                    <h3>Subscribe to our Newsletter</h3>
+                    <small>Instant wardrobe updates, new arrivals, fashion news, don’t miss a beat – sign up to our newsletter now.</small>
+                    <form id="newsletter" method="post" action="#">
+                        <input type="text" class="input-text" value="Enter your email" title="Enter your email" id="newsletter" name="email">
+                        <button class="button" title="" type="submit"></button>
+                    </form>
+                </div>
+            </div>
+            <!--Newsletter_subscribe Ends-->
+        </section>
+        <!--Mid Section Ends-->
+    </div>
+{% endblock %}

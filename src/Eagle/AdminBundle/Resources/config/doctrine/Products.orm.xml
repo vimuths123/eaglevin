@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Eagle\AdminBundle\Entity\Products" table="products">
+    <indexes>
+      <index name="category" columns="category"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="productTitle" type="string" column="product_title" length="400" nullable="false"/>
+    <field name="description" type="string" column="description" length="400" nullable="false"/>
+    <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
+    <field name="storeId" type="integer" column="store_id" nullable="false"/>
+    <field name="status" type="integer" column="status" nullable="false"/>
+    <field name="stock" type="integer" column="stock" nullable="false"/>
+    <field name="isfeatured" type="integer" column="isfeatured" nullable="false"/>
+    <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
+    <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
+    <field name="online" type="integer" column="online" nullable="false"/>
+    <field name="quantity" type="integer" column="quantity" nullable="false"/>
+    <field name="sold" type="integer" column="sold" nullable="false"/>
+    <many-to-one field="category" target-entity="ProductCategory">
+      <join-columns>
+        <join-column name="category" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

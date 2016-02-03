@@ -1,0 +1,12 @@
+parameters:
+    product.table:  table1
+    categories.table: table2
+
+services:
+    product_update:
+        class: Eagle\AdminBundle\Services\Update
+        arguments:    ["%product.table%"]
+        
+    category_update:    
+        class: Eagle\AdminBundle\Services\Update
+        arguments:    ["%categories.table%"]

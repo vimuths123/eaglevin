@@ -1,0 +1,273 @@
+{% extends "::admin_base.html.twig" %}
+
+{% block title %}EagleAdminBundle:products:add{% endblock %}
+
+{% block body %}
+
+<!--Body content-->
+<div id="content" class="clearfix" ng-app="product_app">
+    <!--Success message-->
+    <div class="ui-pnotify suc_msg" style="width: 300px; right: 25px; top: 25px; opacity: 0.95; display: none; cursor: auto;">
+        <div class="alert ui-pnotify-container alert-success ui-pnotify-shadow" style="min-height: 16px;">
+            <div class="ui-pnotify-icon"><span class="picon icon16 iconic-icon-check-alt white"></span></div>
+            <div class="ui-pnotify-closer closer" style="cursor: pointer; margin-right: -6px; margin-top: -8px;"><span class="icon-remove"></span></div>
+            <div class="ui-pnotify-sticker" style="cursor: pointer; visibility: hidden; display: none;"><span class="icon-pause"></span></div>
+            <h4 class="ui-pnotify-title">Product added</h4>
+            <div class="ui-pnotify-text">Product added successfully.</div>
+        </div>
+    </div>
+    <div class="contentwrapper" ng-controller="addController"><!--Content wrapper-->
+
+        <div class="heading">
+
+            <h3>Add product</h3>                    
+
+            <div class="resBtnSearch">
+                <a href="#"><span class="icon16 brocco-icon-search"></span></a>
+            </div>
+
+                {#<div class="search">
+
+                    <form id="searchform" action="search.html" />
+                    <input type="text" id="tipue_search_input" class="top-search" placeholder="Search here ..." />
+                    <input type="submit" id="tipue_search_button" class="search-btn" value="" />
+                    </form>
+
+                </div><!-- End search -->#}
+
+              {#  <ul class="breadcrumb">
+                    <li>You are here:</li>
+                    <li>
+                        <a href="#" class="tip" title="back to dashboard">
+                            <span class="icon16 icomoon-icon-screen"></span>
+                        </a> 
+                        <span class="divider">
+                            <span class="icon16 icomoon-icon-arrow-right"></span>
+                        </span>
+                    </li>
+                    <li class="active">Forms</li>
+                </ul>
+#}
+        </div><!-- End .heading-->
+
+        <!-- Build page from here: Usual with <div class="row-fluid"></div> -->
+        <form class="add_product" method="post" enctype="multipart/form-data">
+            <div class="row-fluid">
+
+                <div class="span6">
+
+                    <div class="box">
+
+                        <div class="title">
+
+                            <h4>
+                                <span class="icon16 brocco-icon-grid"></span>
+                                <span>Product details</span>
+                            </h4>
+
+                        </div>
+                        <div class="content">
+                            <div class="form-horizontal" novalidate="novalidate" action="">
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="normal" class="pro_title">Product Title</label>
+                                            <input class="span8" name="pro_title" type="text" ng-model="addForm.productTitle"/>
+                                        </div>
+                                    </div>
+                                </div>         
+
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="textarea">Product description</label>
+                                            <textarea ng-model="addForm.description" class="span8" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="normal">Price</label>
+                                            <input class="span4" name="price" type="text" ng-model="addForm.price"/>
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div class="form-actions">
+                                    <div class="pull-right">
+                                        <button id="add_btn" class="btn btn-info" type="submit" ng-click="save()" ng-model="selected">Add product</button>
+                                        <button class="btn" ng-click="clear()" type="button">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- End .box -->
+
+                </div><!-- End .span6 -->
+
+                <div class="span6">
+
+                    <div class="box">
+
+                        <div class="title">
+
+                            <h4>
+                                <span class="icon16 brocco-icon-grid"></span>
+                                <span>Product attributes</span>
+                            </h4>
+
+                        </div>
+                        <div class="content">
+                            <div class="form-horizontal" action="" novalidate="novalidate">
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="checkboxes">Category</label>
+                                            <div class="span8 controls">
+                                                <select name="category" class="category" ng-model="addForm.category">                                                   
+                                                    <option selected="selected" value="">Select a category</option>
+                                                        {% for cat in cats %}
+                                                    <option value="{{cat.id}}">{{cat.catTitle}}</option>
+                                                        {% endfor %}
+                                                </select>
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="checkboxes">Is featured</label>
+
+                                            <div class="left marginT5 marginR10">
+                                                <input type="checkbox" id="inlineCheckbox1" ng-true-value="1" ng-false-value="0" class="styled" ng-model="addForm.isfeatured"/> 
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="checkboxes">Status</label>
+                                            <div class="span8 controls">   
+                                                <select name="select" ng-model="addForm.status">
+                                                    <option value="1">Visible</option>
+                                                    <option value="0">Inisible</option>
+                                                </select>
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="checkboxes">Stock</label>
+                                            <div class="span8 controls">   
+                                                <select name="select" ng-model="addForm.stock">
+                                                    <option value="1">Track stock</option>
+                                                    <option value="0">Don't track</option>
+                                                </select>
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                </div>
+
+                                <div class="form-row row-fluid">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <label class="form-label span4" for="normal">Quantity</label>
+                                            <input class="span4" name="quantity" type="text" ng-model="addForm.quantity"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+
+                    </div><!-- End .box -->
+
+                </div><!-- End .span6 -->
+
+
+
+            </div><!-- End .row-fluid -->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <div class="box">
+
+                        <div class="title">
+                            <h4>    
+                                <span>Product images</span>
+                            </h4>
+                        </div>
+
+                        <div class="content">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img data-src="holder.js/100%x100%" alt="...">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new" style="padding-right: 10px;">
+                                            Select image
+                                        </span>
+                                        <span class="fileinput-exists" style="padding-right: 10px;">
+                                            Change
+                                        </span>
+                                        <input type="file" name="fileToUpload" id="image_up"></span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </div>
+                            </div>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img data-src="holder.js/100%x100%" alt="...">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new" style="padding-right: 10px;">
+                                            Select image
+                                        </span>
+                                        <span class="fileinput-exists" style="padding-right: 10px;">
+                                            Change
+                                        </span>
+                                        <input type="file" name="fileToUpload1" id="image_up"></span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </div>
+                            </div>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img data-src="holder.js/100%x100%" alt="...">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new" style="padding-right: 10px;">
+                                            Select image
+                                        </span>
+                                        <span class="fileinput-exists" style="padding-right: 10px;">
+                                            Change
+                                        </span>
+                                        <input type="file" name="fileToUpload2" id="image_up"></span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- End .box -->
+
+                </div><!-- End .span6 -->
+
+            </div><!-- End .row-fluid -->
+        </form>
+    </div><!-- End contentwrapper -->
+</div><!-- End #content -->
+</div>
+{% endblock %}
+

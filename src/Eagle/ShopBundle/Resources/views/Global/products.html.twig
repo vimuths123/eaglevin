@@ -1,0 +1,218 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}EagleShopBundle:product:index{% endblock %}
+
+{% block body %}
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <style>
+        .toolbar select{
+            padding: 0px;
+        }
+
+        .no_Lmar{
+            margin-left: 0px;
+        }
+
+        div.selector{
+            width: 128px !important;
+        }
+
+        div.selector span{
+            width: 95%;
+        }
+
+        header .top_links > li a{
+            padding: 15px 20px;
+        }
+        
+        .clink{
+            background-color: #55514B !important;
+        }
+
+        .clink a{
+            color: white !important;
+            margin-left: 7px !important;
+        }
+        
+        .cPointer:hover{
+            cursor: pointer;
+        }
+    </style>
+    <div class="section_container" ng-app="prod_app">
+        <!--Mid Section Starts-->
+        <section ng-controller="prodController">
+            <!--SIDE NAV STARTS-->
+            <div id="side_nav">
+                <div class="sideNavCategories">
+                    <h1>PRODUCTS</h1>
+                    <ul class="category departments no_Lmar" ng-init="category = {{category}}; searchText = '{{searchText}}'">
+                        <li class="header">Categories</li>
+                            {% for category in categories %}
+                            <li class="cPointer" ng-class="{'clink': category === {{category.id}}}"><a ng-click="changeCategory({{category.id}})">{{ category.catTitle }}</a></li>
+                            {% endfor %}
+                            {#<li><a href="#">Sweaters</a></li>
+                            <li><a href="#">Knit Tops & Tees</a></li>
+                            <li><a href="#">Shirts & Blouses</a></li>
+                            <li><a href="#">Jackets</a></li>
+                            <li><a href="#">Pants</a></li>
+                            <li><a href="#">Jeans</a></li>
+                            <li><a href="#">Dresses</a></li>
+                            <li><a href="#">Skirts</a></li>
+                            <li><a href="#">No Iron Collection</a></li>#}
+                    </ul>
+                    <ul class="category collection no_Lmar">
+                        <li class="header">Collection</li>
+                        <li><a href="#">All Brands</a></li>
+                        <li><a href="#">Citizens of Humanity</a></li>
+                        <li><a href="#">Crew Clothing</a></li>
+                        <li><a href="#">Boutique</a></li>
+                        <li><a href="#">Summer</a></li>
+                        <li><a href="#">Mudd & Water</a></li>
+                    </ul>
+                    <ul class="category price no_Lmar">
+                        <li class="header">Price</li>
+                        <li><a href="#">$50 to $100</a></li>
+                        <li><a href="#">$100 to $200</a></li>
+                        <li><a href="#">$200 to $500</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--SIDE NAV ENDS-->
+            <!--MAIN CONTENT STARTS-->
+            <div id="main_content">
+                <div class="category_banner"> <img src="{{ asset('bundles/eagleshop/images/promo_cat_banner.jpg') }}"/> </div>
+                    {# <ul class="breadcrumb">
+                         <li><a href="#">Home</a></li>
+                         <li><a href="leisure_listing.html">Women</a></li>
+                         <li class="active"><a href="#">Shirts & Blouses</a></li>
+                     </ul>#}
+                <!--Toolbar-->
+                <div class="toolbar">
+                    <div class="sortby">
+                        <label>Sort by :</label>
+                        <select ng-model="filter_item" ng-change="filterchnge()">
+                            <option value="1">LATEST PRODUCTS</option>
+                            <option value="2">PRICE : HIGHETS PRICE</option>
+                            <option value="3">PRICE : LOWEST PRICE</option>
+                        </select>
+                    </div>
+                    <div class="viewby" style="margin-left: 42px;">
+                        <label>Search :</label>
+                        <input type="text" style="height: 16px;" ng-model="searchText" ng-change="search()" placeholder="Search products ...">
+                    </div>
+                    <div class="show_no">
+                        <label>Show :</label>
+                        <select ng-model="per_page" ng-change="ChngeItmsPerPage()">
+                            <option value="9">9 ITEMS</option>
+                            <option value="12">12 ITEMS</option>
+                            <option value="24">24 ITEMS</option>
+                            <option value="36">36 ITEMS</option>
+                        </select>
+                    </div>
+                </div>
+                <!--Toolbar-->
+                <!--Product List Starts-->
+                <div class="products_list products_slider">
+                    <ul ng-repeat="product in products">
+                        <li> <a class="product_image"><img src=""/></a>
+                            <div class="product_info">
+                                <h3><a href="leisure_detail.html">[[ product.product_title ]]</a></h3>
+                                <small>[[ product.description ]]</small> </div>
+                            <div class="price_info"> <a href="/products/display/[[ product.id ]]">+ View the product</a>
+                                <button class="price_add" id="addToCart" price="[[product.price]]" pid="[[product.id]]" title="[[product.product_title]]" type="button">
+                                    <span class="pr_price">[[ product.price | currency ]]</span><span class="pr_add">Add to Cart</span>
+                                </button>
+                            </div>
+                        </li>                        
+                    </ul>
+                </div>
+                <!--Product List Ends-->
+                <!--Toolbar-->
+                <div class="toolbar">
+                    <div class="sortby">
+                        <label>Sort by :</label>
+                        <select ng-model="filter_item" ng-change="filterchnge()">
+                            <option value="1">LATEST PRODUCTS</option>
+                            <option value="2">PRICE : HIGHETS PRICE</option>
+                            <option value="3">PRICE : LOWEST PRICE</option>
+                        </select>
+                    </div>
+                    {# <div class="viewby">
+                         <label>View as :</label>
+                         <a class="list" href="#"></a> <a class="grid" href="#"></a> </div>#}
+                    <div class="show_no">
+                        <label>Show :</label>
+                        <select ng-model="per_page" ng-change="ChngeItmsPerPage()">
+                            <option value="9">9 ITEMS</option>
+                            <option value="12">12 ITEMS</option>
+                            <option value="24">24 ITEMS</option>
+                            <option value="36">36 ITEMS</option>
+                        </select>
+                    </div>
+                </div>
+                <!--Toolbar-->
+                <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+                {#  <style>
+                     .pagination_div .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+                         background-color: #544f4b;
+                         border-color: #544f4b;
+                     }
+ 
+                     .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+                         background-color: #544f4b !important;
+                         border-color: #544f4b !important;
+                     }
+ 
+                     .pagination > li > a, .pagination > li > span{
+                         color: #5f5a56;
+                     }
+ 
+                      .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus{
+                          color: #5f5a56;
+                      }
+                      
+                      .toolbar select{
+                          padding: 0px;
+                      }
+                 </style>#}
+                {#<div class="pagination_div">
+                    <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="4" boundary-links="true" rotate="false" items-per-page="itemsForPage"></uib-pagination>
+                </div>#}
+
+                <style>
+                    .pagination_parent a{
+                        color: #a2a2a2;
+                    }
+                    .pagination_parent a:hover{
+                        color: #a2a2a2;
+                        cursor: pointer;
+                    }
+                </style>
+
+                <div class="pagination_parent" style="width: 100%;">
+                    <p style="position: relative; top: 28px; float: left;">Showing [[firstEntry]] to [[lastEntry]] of [[totalProduct]] entries</p>
+                    <div style="float: right;" id="pagination_div"></div>
+                </div>
+            </div>
+            <!--MAIN CONTENT ENDS-->
+            <!--Newsletter_subscribe Starts-->
+
+
+            <div class="subscribe_block">
+                <div class="find_us">
+                    <h3>Find us on</h3>
+                    <a class="twitter" href="#"></a> <a class="facebook" href="#"></a> <a class="rss" href="#"></a> </div>
+                <div class="subscribe_nl">
+                    <h3>Subscribe to our Newsletter</h3>
+                    <small>Instant wardrobe updates, new arrivals, fashion news, don’t miss a beat – sign up to our newsletter now.</small>
+                    <form id="newsletter" method="post" action="#">
+                        <input type="text" class="input-text" value="Enter your email" title="Enter your email" id="newsletter" name="email">
+                        <button style="box-sizing: border-box !important;" class="button" title="" type="submit"></button>
+                    </form>
+                </div>
+            </div>
+            <!--Newsletter_subscribe Ends-->
+        </section>
+        <!--Mid Section Ends-->
+    </div>
+{% endblock %}
