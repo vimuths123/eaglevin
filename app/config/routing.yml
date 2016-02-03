@@ -1,0 +1,13 @@
+eagle_admin:
+    resource: "@EagleAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+eagle_shop:
+    resource: "@EagleShopBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: @AppBundle/Controller/
+    type:     annotation

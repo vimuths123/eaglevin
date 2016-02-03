@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link href='http://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'>
+
+        <style>
+            .loginPage .navbar .brand{
+                float: left !important;
+            }
+
+            .resBtn{
+                left: 200px !important;
+                position: absolute;
+                top: 14px !important;
+                z-index: 1000;
+            }
+        </style>
+
+        {% stylesheets 
+            'bundles/eagleadmin/css/bootstrap/bootstrap.min.css'
+            'bundles/eagleadmin/css/bootstrap/bootstrap-responsive.min.css'
+            'bundles/eagleadmin/css/bootstrap/jasny-bootstrap.css'
+            filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets 'bundles/eagleadmin/css/supr-theme/jquery.ui.supr.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}        
+
+        {% stylesheets 'bundles/eagleadmin/css/icons.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets 
+            'bundles/eagleadmin/plugins/qtip/jquery.qtip.css'
+            'bundles/eagleadmin/plugins/fullcalendar/fullcalendar.css'
+            'bundles/eagleadmin/plugins/jpages/jPages.css'
+            'bundles/eagleadmin/plugins/prettify/prettify.css'
+            'bundles/eagleadmin/plugins/inputlimiter/jquery.inputlimiter.css'
+            'bundles/eagleadmin/plugins/ibutton/jquery.ibutton.css'
+            'bundles/eagleadmin/plugins/uniform/uniform.default.css'
+            'bundles/eagleadmin/plugins/color-picker/color-picker.css'
+            'bundles/eagleadmin/plugins/select/select2.css'
+            'bundles/eagleadmin/plugins/validate/validate.css'
+            'bundles/eagleadmin/plugins/pnotify/jquery.pnotify.default.css'
+            'bundles/eagleadmin/plugins/pretty-photo/prettyPhoto.css'
+            'bundles/eagleadmin/plugins/smartWizzard/smart_wizard.css'
+            'bundles/eagleadmin/plugins/dataTables/jquery.dataTables.css'
+            'bundles/eagleadmin/plugins/elfinder/elfinder.css'
+            'bundles/eagleadmin/plugins/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css'
+            'bundles/eagleadmin/plugins/search/tipuesearch.css'
+            'bundles/eagleadmin/plugins/tokeninput/token-input-facebook.css'
+            'bundles/eagleadmin/plugins/tokeninput/token-input.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets 'bundles/eagleadmin/css/main.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+
+
+        {# {% javascripts 'bundles/eagleshop/js/*' %}
+         <script src="{{ asset_url }}"></script>
+         {% endjavascripts %}#}
+
+        <link href="{{asset('bundles/eagleshop/css/base.css')}}"/>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body class="loginPage">
+
+        <!-- loading animation -->
+        <div id="qLoverlay"></div>
+        <div id="qLbar"></div>
+
+        <div id="header">
+
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="brand" href="dashboard.html">Supr.<span class="slogan">admin</span></a>
+                        <div class="nav-no-collapse">
+                            <ul class="nav">
+                                <li><a href="dashboard.html"><span class="icon16 icomoon-icon-screen"></span> Dashboard</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="icon16 icomoon-icon-cog"></span> Settings
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="menu">
+                                            <ul>
+                                                <li>                                                    
+                                                    <a href="#"><span class="icon16 iconic-icon-new-window"></span>Site config</a>
+                                                </li>
+                                                <li>                                                    
+                                                    <a href="#"><span class="icon16 icomoon-icon-wrench"></span>Plugins</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><span class="icon16 icomoon-icon-picture-2"></span>Themes</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="icon16 icomoon-icon-mail"></span>Messages <span class="notification">8</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="menu">
+                                            <ul class="messages">    
+                                                <li class="header"><strong>Messages</strong> (10) emails and (2) PM</li>
+                                                <li>
+                                                    <span class="icon"><span class="icon16 icomoon-icon-user-2"></span></span>
+                                                    <span class="name"><a data-toggle="modal" href="#myModal1"><strong>Sammy Morerira</strong></a><span class="time">35 min ago</span></span>
+                                                    <span class="msg">I have question about new function ...</span>
+                                                </li>
+                                                <li>
+                                                    <span class="icon avatar">
+                                                        {#                                               <img src="images/avatar.jpg" alt="" />#}
+                                                        <img src="" alt="" />
+                                                    </span>
+                                                    <span class="name"><a data-toggle="modal" href="#myModal1"><strong>George Michael</strong></a><span class="time">1 hour ago</span></span>
+                                                    <span class="msg">I need to meet you urgent please call me ...</span>
+                                                </li>
+                                                <li>
+                                                    <span class="icon"><span class="icon16 icomoon-icon-mail"></span></span>
+                                                    <span class="name"><a data-toggle="modal" href="#myModal1"><strong>Ivanovich</strong></a><span class="time">1 day ago</span></span>
+                                                    <span class="msg">I send you my suggestion, please look and ...</span>
+                                                </li>
+                                                <li class="view-all"><a href="#">View all messages <span class="icon16  icomoon-icon-arrow-right-7"></span></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <ul class="nav pull-right usernav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="icon16 icomoon-icon-bell"></span><span class="notification">3</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="menu">
+                                            <ul class="notif">
+                                                <li class="header"><strong>Notifications</strong> (3) items</li>
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="icon"><span class="icon16 icomoon-icon-user-2"></span></span>
+                                                        <span class="event">1 User is registred</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="icon"><span class="icon16 icomoon-icon-comments-4"></span></span>
+                                                        <span class="event">Jony add 1 comment</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="icon"><span class="icon16 icomoon-icon-new"></span></span>
+                                                        <span class="event">admin Julia added post</span>
+                                                    </a>
+                                                </li>
+                                                <li class="view-all"><a href="#">View all notifications <span class="icon16  icomoon-icon-arrow-right-7"></span></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle avatar" data-toggle="dropdown">
+                                        {#                                <img src="images/avatar.jpg" alt="" class="image" /> #}
+                                        <img src="" alt="" class="image" /> 
+                                        <span class="txt">admin@supr.com</span>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="menu">
+                                            <ul>
+                                                <li>
+                                                    <a href="#"><span class="icon16 icomoon-icon-user-3"></span>Edit profile</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><span class="icon16 icomoon-icon-comments-2"></span>Approve comments</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><span class="icon16 entypo-icon-contact"></span>Add user</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="/logout"><span class="icon16 icomoon-icon-exit"></span> Logout</a></li>
+                            </ul>
+                        </div><!-- /.nav-collapse -->
+                    </div>
+                </div><!-- /navbar-inner -->
+            </div><!-- /navbar --> 
+
+        </div><!-- End #header -->
+
+        <div id="wrapper">
+
+            <!--Responsive navigation button-->  
+            <div class="resBtn">
+                <a href="#"><span class="icon16 minia-icon-list-3"></span></a>
+            </div>
+
+            <!--Sidebar collapse button-->  
+            <div class="collapseBtn">
+                <a href="#" class="tipR" title="Hide sidebar"><span class="icon12 minia-icon-layout"></span></a>
+            </div>
+
+            <!--Sidebar background-->
+            <div id="sidebarbg"></div>
+            <!--Sidebar content-->
+            <div id="sidebar">
+
+                <div class="shortcuts">
+                    <ul>
+                        <li><a href="#" title="Support section" class="tip"><span class="icon24 icomoon-icon-support"></span></a></li>
+                        <li><a href="#" title="Database backup" class="tip"><span class="icon24 icomoon-icon-database"></span></a></li>
+                        <li><a href="#" title="Sales statistics" class="tip"><span class="icon24 iconic-icon-chart"></span></a></li>
+                        <li><a href="#" title="Write post" class="tip"><span class="icon24 icomoon-icon-pencil"></span></a></li>
+                    </ul>
+                </div><!-- End search -->            
+
+                <div class="sidenav">
+
+                    <div class="sidebar-widget" style="margin: -1px 0 0 0;">
+                        <h5 class="title" style="margin-bottom:0">Navigation</h5>
+                    </div><!-- End .sidenav-widget -->
+
+                    <div class="mainnav">
+                        <ul>
+                            <li><a href="/dashboard/index"><span class="icon16 icomoon-icon-stats-up"></span>Dashboard</a></li>
+                            <li>
+                                <a href="#"><span class="icon16 minia-icon-list-4"></span>Products</a>
+                                <ul class="sub">
+                                    <li><a href="/products/add"><span class="icon16 icomoon-icon-paper"></span>Add product</a></li>
+                                    <li><a href="/products/view"><span class="icon16 icomoon-icon-paper"></span>View products</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><span class="icon16 silk-icon-columns"></span>Categories</a>
+                                <ul class="sub">
+                                    <li><a href="/productCategories/add"><span class="icon16 icomoon-icon-arrow-right"></span>Add category</a></li>
+                                    <li><a href="/productCategories/view"><span class="icon16 icomoon-icon-arrow-right"></span>View categories</a></li>
+                                </ul>
+                            </li>
+                           {# <li>
+                                <a href="#"><span class="icon16 brocco-icon-grid"></span>UI Elements</a>
+                                <ul class="sub">
+                                    <li><a href="icons.html"><span class="icon16 icomoon-icon-rocket"></span>Icons</a></li>
+                                    <li><a href="buttons.html"><span class="icon16 icomoon-icon-paper"></span>Buttons</a></li>
+                                    <li><a href="elements.html"><span class="icon16 minia-icon-cog"></span>Elements</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="typo.html"><span class="icon16 icomoon-icon-font"></span>Typography</a></li>
+                            <li><a href="grid.html"><span class="icon16 icomoon-icon-grid-view"></span>Grid</a></li>
+                            <li><a href="calendar.html"><span class="icon16 brocco-icon-calendar"></span>Calendar</a></li>
+                            <li>
+                                <a href="widgets.html"><span class="icon16 icomoon-icon-cube"></span>Widgets<span class="notification green">30</span></a>
+                            </li>
+                            <li><a href="file.html"><span class="icon16 icomoon-icon-upload-2"></span>File Manager</a></li>
+                            <li>
+                                <a href="#"><span class="icon16 icomoon-icon-paper"></span>Error pages<span class="notification">6</span></a>
+                                <ul class="sub">
+                                    <li><a href="403.html"><span class="icon16 icomoon-icon-paper"></span>Error 403</a></li>
+                                    <li><a href="404.html"><span class="icon16 icomoon-icon-paper"></span>Error 404</a></li>
+                                    <li><a href="405.html"><span class="icon16 icomoon-icon-paper"></span>Error 405</a></li>
+                                    <li><a href="500.html"><span class="icon16 icomoon-icon-paper"></span>Error 500</a></li>
+                                    <li><a href="503.html"><span class="icon16 icomoon-icon-paper"></span>Error 503</a></li>
+                                    <li><a href="offline.html"><span class="icon16 icomoon-icon-paper"></span>Offline page</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><span class="icon16 iconic-icon-box"></span>Other pages<span class="notification blue">4</span></a>
+                                <ul class="sub">
+                                    <li><a href="invoice.html"><span class="icon16 icomoon-icon-paper"></span>Invoice page</a></li>
+                                    <li><a href="profile.html"><span class="icon16 icomoon-icon-paper"></span>User profile</a></li>
+                                    <li><a href="search.html"><span class="icon16 wpzoom-search"></span>Search page</a></li>
+                                    <li><a href="email.html"><span class="icon16 icomoon-icon-mail"></span>Email page</a></li>
+                                </ul>
+                            </li>#}
+                        </ul>
+                    </div>
+                </div><!-- End sidenav -->
+
+                <div class="sidebar-widget">
+                    <h5 class="title">Monthly Bandwidth Transfer</h5>
+                    <div class="content">
+                        <span class="icon16 iconic-icon-transfer left"></span>
+                        <div class="progress progress-mini progress-danger left tip" title="87%">
+                            <div class="bar" style="width: 87%;"></div>
+                        </div>
+                        <span class="percent">87%</span>
+                        <div class="stat">19419.94 / 12000 MB</div>
+                    </div>
+
+                </div><!-- End .sidenav-widget -->
+
+                <div class="sidebar-widget">
+                    <h5 class="title">Disk Space Usage</h5>
+                    <div class="content">
+                        <span class="icon16 icomoon-icon-cloud left"></span>
+                        <div class="progress progress-mini progress-success left tip" title="16%">
+                            <div class="bar" style="width: 16%;"></div>
+                        </div>
+                        <span class="percent">16%</span>
+                        <div class="stat">304.44 / 8000 MB</div>
+                    </div>
+
+                </div><!-- End .sidenav-widget -->
+
+                <div class="sidebar-widget">
+                    <h5 class="title">Ad sense stats</h5>
+                    <div class="content">
+
+                        <div class="stats">
+                            <div class="item">
+                                <div class="head clearfix">
+                                    <div class="txt">Advert View</div>
+                                </div>
+                                <span class="icon16 icomoon-icon-eye left"></span>
+                                <div class="number">21,501</div>
+                                <div class="change">
+                                    <span class="icon24 icomoon-icon-arrow-up green"></span>
+                                    5%
+                                </div>
+                                <span id="stat1" class="spark"></span>
+                            </div>
+                            <div class="item">
+                                <div class="head clearfix">
+                                    <div class="txt">Clicks</div>
+                                </div>
+                                <span class="icon16 entypo-icon-thumbs-up left"></span>
+                                <div class="number">308</div>
+                                <div class="change">
+                                    <span class="icon24 icomoon-icon-arrow-down red"></span>
+                                    8%
+                                </div>
+                                <span id="stat2" class="spark"></span>
+                            </div>
+                            <div class="item">
+                                <div class="head clearfix">
+                                    <div class="txt">Page CTR</div>
+                                </div>
+                                <span class="icon16 icomoon-icon-heart left"></span>
+                                <div class="number">4%</div>
+                                <div class="change">
+                                    <span class="icon24 icomoon-icon-arrow-down red"></span>
+                                    1%
+                                </div>
+                                <span id="stat3" class="spark"></span>
+                            </div>
+                            <div class="item">
+                                <div class="head clearfix">
+                                    <div class="txt">Earn money</div>
+                                </div>
+                                <span class="icon16 icomoon-icon-calculate left"></span>
+                                <div class="number">$376</div>
+                                <div class="change">
+                                    <span class="icon24 icomoon-icon-arrow-up green"></span>
+                                    26%
+                                </div>
+                                <span id="stat4" class="spark"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div><!-- End .sidenav-widget -->
+
+                <div class="sidebar-widget">
+                    <h5 class="title">Right now</h5>
+                    <div class="content">
+                        <div class="rightnow">
+                            <ul class="unstyled">
+                                <li><span class="number">34</span><span class="icon16 icomoon-icon-new"></span>Posts</li>
+                                <li><span class="number">7</span><span class="icon16 icomoon-icon-paper"></span>Pages</li>
+                                <li><span class="number">14</span><span class="icon16 brocco-icon-list"></span>Categories</li>
+                                <li><span class="number">201</span><span class="icon16 icomoon-icon-tag"></span>Tags</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div><!-- End .sidenav-widget -->
+
+            </div><!-- End #sidebar -->
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+            {% javascripts
+    '@EagleAdminBundle/Resources/public/js/bootstrap/bootstrap.js'
+    '@EagleAdminBundle/Resources/public/js/bootstrap/jasny-bootstrap.min.js'
+    '@EagleAdminBundle/Resources/public/js/jquery.cookie.js'
+    '@EagleAdminBundle/Resources/public/js/jquery.mousewheel.js'
+    '@EagleAdminBundle/Resources/public/plugins/qtip/jquery.qtip.min.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            {% javascripts 
+    '@EagleAdminBundle/Resources/public/plugins/flot/jquery.flot.js' 
+    '@EagleAdminBundle/Resources/public/plugins/flot/*' 
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+
+            {% javascripts
+    '@EagleAdminBundle/Resources/public/plugins/sparkline/jquery.sparkline.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/knob/jquery.knob.js'
+    '@EagleAdminBundle/Resources/public/plugins/fullcalendar/fullcalendar.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/prettify/prettify.js'
+    '@EagleAdminBundle/Resources/public/plugins/watermark/jquery.watermark.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/elastic/jquery.elastic.js'
+    '@EagleAdminBundle/Resources/public/plugins/inputlimiter/jquery.inputlimiter.1.3.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/maskedinput/jquery.maskedinput-1.3.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/ibutton/jquery.ibutton.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/uniform/jquery.uniform.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/stepper/ui.stepper.js'
+    '@EagleAdminBundle/Resources/public/plugins/color-picker/colorpicker.js'
+    '@EagleAdminBundle/Resources/public/plugins/timeentry/jquery.timeentry.min.js'  
+    '@EagleAdminBundle/Resources/public/plugins/select/select2.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/dualselect/jquery.dualListBox-1.3.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/tiny_mce/jquery.tinymce.js'
+    '@EagleAdminBundle/Resources/public/plugins/validate/jquery.validate.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/search/tipuesearch_set.js'
+    '@EagleAdminBundle/Resources/public/plugins/search/tipuesearch_data.js'
+    '@EagleAdminBundle/Resources/public/plugins/animated-progress-bar/jquery.progressbar.js'  
+    '@EagleAdminBundle/Resources/public/plugins/pnotify/jquery.pnotify.min.js'  
+    '@EagleAdminBundle/Resources/public/plugins/lazy-load/jquery.lazyload.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/jpages/jPages.min.js'  
+    '@EagleAdminBundle/Resources/public/plugins/pretty-photo/jquery.prettyPhoto.js'
+    '@EagleAdminBundle/Resources/public/plugins/smartWizzard/jquery.smartWizard-2.0.min.js' 
+    '@EagleAdminBundle/Resources/public/plugins/ios-fix/ios-orientationchange-fix.js'
+    '@EagleAdminBundle/Resources/public/plugins/dataTables/jquery.dataTables.min.js' 
+    '@EagleAdminBundle/Resources/public/plugins/elfinder/elfinder.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/plupload/plupload.js'
+    '@EagleAdminBundle/Resources/public/plugins/plupload/plupload.html4.js'
+    '@EagleAdminBundle/Resources/public/plugins/plupload/jquery.plupload.queue/jquery.plupload.queue.js'
+    '@EagleAdminBundle/Resources/public/plugins/responsive-tables/responsive-tables.js'
+    '@EagleAdminBundle/Resources/public/js/statistic.js'
+    '@EagleAdminBundle/Resources/public/plugins/tokeninput/jquery.tokeninput.js'
+    '@EagleAdminBundle/Resources/public/js/add_product.js'
+    '@EagleAdminBundle/Resources/public/js/categories.js'
+    '@EagleAdminBundle/Resources/public/js/bootstrap-paginator.js'
+    '@EagleAdminBundle/Resources/public/js/checklist-model.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+
+
+
+            {% javascripts
+    '@EagleAdminBundle/Resources/public/plugins/touch-punch/jquery.ui.touch-punch.min.js'
+    '@EagleAdminBundle/Resources/public/js/main.js'
+            %}
+            <script src="{{ asset_url }}"></script>           
+           
+            {% endjavascripts %}
+        {% endblock %}
+       
+</body>
+</html>
