@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Eagle\ShopBundle\Entity\Sells;
 
 class GlobalController extends Controller {
 
@@ -34,7 +35,7 @@ class GlobalController extends Controller {
         $qb->select('p.id, p.productTitle, p.price, p.description, pi.imgUrl')
                 ->from('EagleShopBundle:Products', 'p')
                 ->leftJoin('EagleShopBundle:ProuctImage', 'pi', \Doctrine\ORM\Query\Expr\Join::WITH, 'pi.productId = p.id')
-                ->where('p.isfeatured = :isfeatured')                
+                ->where('p.isfeatured = :isfeatured')
                 ->orderBy('p.id', 'DESC')
                 ->groupBy('p.id')
                 ->setParameter('isfeatured', 1)
@@ -42,7 +43,7 @@ class GlobalController extends Controller {
 
         return $qb->getQuery()->getResult();
     }
-    
+
     public function getcategoryProduct($category, $amount, $id) {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
@@ -51,7 +52,7 @@ class GlobalController extends Controller {
         $qb->select('p.id, p.productTitle, p.price, p.description, pi.imgUrl')
                 ->from('EagleShopBundle:Products', 'p')
                 ->leftJoin('EagleShopBundle:ProuctImage', 'pi', \Doctrine\ORM\Query\Expr\Join::WITH, 'pi.productId = p.id')
-                ->where('p.category = :category')         
+                ->where('p.category = :category')
                 ->andWhere('p.id != :id')
                 ->orderBy('p.id', 'DESC')
                 ->groupBy('p.id')
@@ -134,7 +135,22 @@ class GlobalController extends Controller {
             $session = $this->getRequest()->getSession();
             $paypal = $this->get('Paypal');
             $paypal->setItems($session->get('items'));
+
             $paypal->getUserDetails($_POST);
+
+//            Add sells to sells table            
+            $items = $session->get('items');
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($items as $key => $value) {
+                $sells = new Sells();
+                $sells->setProductId($key);
+                $sells->setQuantity($value['quantity']);
+                $sells->setDate(date("d-m-Y h:i:s"));
+                $em->persist($sells);
+                $em->flush();
+            }
+
 
 //            Destroy shopping cart
             $session->remove('items');
@@ -345,9 +361,9 @@ class GlobalController extends Controller {
 
 
         $product = $qb->getQuery()->getOneOrNullResult();
-        
+
         $category = $product->getCategory()->getId();
-        
+
         $related_products = $this->getcategoryProduct($category, 8, $id);
 
         $repository = $this->getDoctrine()
