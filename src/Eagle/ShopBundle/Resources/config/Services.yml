@@ -1,4 +1,4 @@
 services:
     paypal:
         class: Eagle\ShopBundle\Services\Paypal
-        arguments:    [sandbox]
+        arguments:    ['sandbox']
