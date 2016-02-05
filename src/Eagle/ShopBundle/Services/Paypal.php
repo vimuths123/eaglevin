@@ -14,6 +14,7 @@ class Paypal {
     public $shipping_1 = "10";
     public $production_url = 'https://www.paypal.com/cgi-bin/webscr?';
     public $sandbox_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?';
+//   
 
     public function __construct($mode) {
         if ($mode == 'paypal') {
@@ -47,7 +48,10 @@ class Paypal {
         $form .= '<input type="hidden" name="last_name" value="' . $this->userDetails['last_name'] . '">';
         $form .= '<input type="hidden" name="email" value="' . $this->userDetails['email'] . '">';
         $form .= '<input type="hidden" name="H_PhoneNumber" value="' . $this->userDetails['H_PhoneNumber'] . '">';
-
+        $form .= '<input type="hidden" name="thanks_page" value="www.google.lk">';
+        $form .= '<input type="hidden" name="notify_url" value="www.google.lk">';
+        $form .= '<input type="hidden" name="cancel_url" value="www.google.lk">';
+     
         $form .= '<input type = "hidden" name = "shipping_1" value = "' . $this->shipping_1 . '">';
         $form .= '<input type = "hidden" name = "tax_1" value = "' . $this->tax_1 . '">';
 
