@@ -39,7 +39,7 @@
 
                                 <h4>
                                     <span class="icon16 icomoon-icon-bars"></span>
-                                    <span>Sells Chart</span>
+                                    <span>Monthly Sales Chart ( X-day / Y-sales )</span>
                                 </h4>
                                 <a href="#" class="minimize">Minimize</a>
                             </div>
@@ -65,7 +65,50 @@
                         </div><!-- End .box -->
 
                     </div><!-- End .span8 -->
+                    <div class="span4">
 
+                        <div class="reminder">
+                            <h4>Summery 
+                                <!--<a href="#" class="icon tip" title="Configure"><span class="icon16 iconic-icon-cog"></span></a>-->
+                            </h4>
+                            <ul>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 iconic-icon-box gray"></span>
+                                    </div>
+                                    <span class="number">{{ summery.allProducts }}</span> 
+                                    <span class="txt">Products </span>
+                                    <a href="/products/view" class="btn btn-warning">go</a>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 brocco-icon-list red"></span>
+                                    </div>
+                                    <span class="number">{{ summery.allCategories }}</span> 
+                                    <span class="txt">Categories </span>
+                                    <a href="/productCategories/view" class="btn btn-warning">go</a>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 icomoon-icon-box-add green"></span>
+                                    </div>
+                                    <span class="number">{{ summery.prsThsMnth }}</span> 
+                                    <span class="txt">Products added this month </span>
+                                    <a href="/products/add" class="btn btn-warning">go</a>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 entypo-icon-add blue"></span>
+                                    </div>
+                                    <span class="number">{{ summery.catsThsMnth }}</span> 
+                                    <span class="txt">Categories added this month</span> 
+                                    <a href="/productCategories/add" class="btn btn-warning">go</a>
+                                </li>
+                                                             
+                            </ul>
+                        </div><!-- End .reminder -->
+
+                    </div><!-- End .span4 -->
                     
 
                 </div><!-- End .row-fluid -->

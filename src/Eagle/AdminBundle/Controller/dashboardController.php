@@ -21,18 +21,64 @@ class dashboardController extends Controller {
 
         if ($user === NULL) {
             return $this->redirect('/login', 301);
-        }
+        }        
 
         return $this->render("EagleAdminBundle:dashboard:index.html.twig", array(
-                    'monthChart' => $this->monthChart()
+                    'monthChart' => $this->monthChart(),
+                    'summery' => $this->summery()
         ));
+    }
+
+    public function summery() {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('count(p.id)')
+                ->from('EagleAdminBundle:Products', 'p');
+
+        $allProducts = $qb->getQuery()->getResult()[0][1];
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('count(c.id)')
+                ->from('EagleAdminBundle:ProductCategory', 'c');
+
+        $allCategories = $qb->getQuery()->getResult()[0][1];
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('count(p.id)')
+                ->from('EagleAdminBundle:Products', 'p')
+                ->andWhere('p.createdAt LIKE :date')
+                ->setParameter('date', date('Y-m-d')."%");
+
+        $prsThsMnth = $qb->getQuery()->getResult()[0][1];
+        
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('count(pc.id)')
+                ->from('EagleAdminBundle:ProductCategory', 'pc')
+                ->andWhere('pc.createdAt LIKE :date')
+                ->setParameter('date', date('Y-m-d')."%");
+
+        $catsThsMnth = $qb->getQuery()->getResult()[0][1];
+        
+        return array(
+            'allProducts' => $allProducts,
+            'allCategories' => $allCategories,
+            'prsThsMnth' => $prsThsMnth,
+            'catsThsMnth' => $catsThsMnth,
+        );
     }
 
     public function monthChart() {
 
 //        Get chart values
         $prods = array();
-        $monthTotal= 0;
+        $monthTotal = 0;
         $sellsTotal = 0;
         $chartval = '';
 
@@ -70,15 +116,15 @@ class dashboardController extends Controller {
         }
         $chartval = $chartval . ']';
 //        /Get chart values
-        
-        
-        
+
+
+
         $monthChart = array(
             'chartval' => $chartval,
             'monthTotal' => $monthTotal,
             'sellsTotal' => $sellsTotal
         );
-        
+
         return $monthChart;
     }
 
