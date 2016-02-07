@@ -18,12 +18,37 @@ class dashboardController extends Controller {
     public function indexAction() {
         $session = $this->getRequest()->getSession();
         $user = $session->get('user');
-        
+
+
+//        echo date('m');        
+        $chartval = "";
+        $sold = $this->dashboardparams();
+        if($sold != null) {
+            foreach ($sold as $value) {
+//                echo substr($value['date'], 3, 2) . '<br>';
+                if(date('m') == substr($value['date'], 3, 2)){
+                    
+                }
+            }
+        }
+        exit();
+
         if ($user === NULL) {
             return $this->redirect('/login', 301);
         }
-        
+
         return $this->render("EagleAdminBundle:dashboard:index.html.twig");
+    }
+
+    public function dashboardparams() {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s.date, sum(s.quantity)')
+                ->from('EagleAdminBundle:Sells', 's')
+                ->groupBy('s.date');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -85,7 +110,7 @@ class dashboardController extends Controller {
     public function logoutAction() {
         $session = $this->getRequest()->getSession();
         $session->remove('user');
-        
+
         return $this->redirect('/login', 301);
     }
 

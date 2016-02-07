@@ -146,7 +146,7 @@ class GlobalController extends Controller {
                 $sells = new Sells();
                 $sells->setProductId($key);
                 $sells->setQuantity($value['quantity']);
-                $sells->setDate(date("d-m-Y h:i:s"));
+                $sells->setDate(date("d-m-Y"));
                 $em->persist($sells);
                 $em->flush();
             }
