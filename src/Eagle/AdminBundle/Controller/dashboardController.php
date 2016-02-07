@@ -19,28 +19,23 @@ class dashboardController extends Controller {
         $session = $this->getRequest()->getSession();
         $user = $session->get('user');
 
-
-//        echo date('m');        
-        $chartval = "";
-        $sold = $this->dashboardparams();
-        if($sold != null) {
-            foreach ($sold as $value) {
-//                echo substr($value['date'], 3, 2) . '<br>';
-                if(date('m') == substr($value['date'], 3, 2)){
-                    
-                }
-            }
-        }
-        exit();
-
         if ($user === NULL) {
             return $this->redirect('/login', 301);
         }
 
-        return $this->render("EagleAdminBundle:dashboard:index.html.twig");
+        return $this->render("EagleAdminBundle:dashboard:index.html.twig", array(
+                    'monthChart' => $this->monthChart()
+        ));
     }
 
-    public function dashboardparams() {
+    public function monthChart() {
+
+//        Get chart values
+        $prods = array();
+        $monthTotal= 0;
+        $sellsTotal = 0;
+        $chartval = '';
+
         $em = $this->container->get('doctrine.orm.entity_manager');
         $qb = $em->createQueryBuilder();
 
@@ -48,7 +43,43 @@ class dashboardController extends Controller {
                 ->from('EagleAdminBundle:Sells', 's')
                 ->groupBy('s.date');
 
-        return $qb->getQuery()->getResult();
+        $sold = $qb->getQuery()->getResult();
+
+        if ($sold != null) {
+            foreach ($sold as $value) {
+                $sellsTotal += $value['1'];
+                if (date('m') == substr($value['date'], 3, 2)) {
+                    $prods[substr($value['date'], 0, 2)] = $value['1'];
+                    $monthTotal += $value['1'];
+                }
+            }
+        }
+
+        $chartval = '[';
+        foreach (range(1, date('j')) as $number) {
+//            echo sprintf("%02d", $number);
+            if (array_key_exists(sprintf("%02d", $number), $prods)) {
+                $chartval .= '[' . sprintf("%02d", $number) . ',' . $prods[sprintf("%02d", $number)] . ']';
+            } else {
+                $chartval .= '[' . sprintf("%02d", $number) . ', 0' . ']';
+            }
+
+            if ($number != 31) {
+                $chartval .= ',';
+            }
+        }
+        $chartval = $chartval . ']';
+//        /Get chart values
+        
+        
+        
+        $monthChart = array(
+            'chartval' => $chartval,
+            'monthTotal' => $monthTotal,
+            'sellsTotal' => $sellsTotal
+        );
+        
+        return $monthChart;
     }
 
     /**
