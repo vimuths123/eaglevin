@@ -24,8 +24,6 @@ class dashboardController extends Controller {
             return $this->redirect('/login', 301);
         }
 
-        $this->yearSold();
-
         return $this->render("EagleAdminBundle:dashboard:index.html.twig", array(
                     'monthChart' => $this->monthChart(),
                     'summery' => $this->summery(),
@@ -38,12 +36,13 @@ class dashboardController extends Controller {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $qb = $em->createQueryBuilder();
 
-        $qb->select('s.productId, count(s.quantity) AS mcount, p.productTitle')
+        $qb->select('s.productId, sum(s.quantity) AS mcount, p.productTitle')
                 ->from('EagleAdminBundle:Sells', 's')
                 ->leftJoin('EagleShopBundle:Products', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 's.productId = p.id')
                 ->groupBy('s.productId')
                 ->orderBy("mcount", "DESC")
                 ->setMaxResults(20);
+
 
         $minProds = 5;
         $maxProds = 20;
@@ -149,7 +148,6 @@ class dashboardController extends Controller {
 
         $chartval = '[';
         foreach (range(1, date('j')) as $number) {
-//            echo sprintf("%02d", $number);
             if (array_key_exists(sprintf("%02d", $number), $prods)) {
                 $chartval .= '[' . sprintf("%02d", $number) . ',' . $prods[sprintf("%02d", $number)] . ']';
             } else {
@@ -173,7 +171,7 @@ class dashboardController extends Controller {
 
         return $monthChart;
     }
-    
+
     public function yearSold() {
         //        Get chart values
         $prods = array();
@@ -201,15 +199,15 @@ class dashboardController extends Controller {
                 ->groupBy('s.date');
 
         $sold = $qb->getQuery()->getResult();
-        
-        
-        
+
+
+
         if ($sold != null) {
             foreach ($sold as $value) {
                 if (date("Y") == substr($value['date'], 6, 4)) {
-                   if (date('m') == substr($value['date'], 3, 2)) {
-                       $monthTotal[date('m')] += $value['1'];
-                   }             
+                    if (date('m') == substr($value['date'], 3, 2)) {
+                        $monthTotal[date('m')] += $value['1'];
+                    }
                 }
             }
         }
@@ -217,17 +215,16 @@ class dashboardController extends Controller {
         $chartval = '[';
         foreach (range(1, count($monthTotal)) as $number) {
             $chartval .= '[' . sprintf("%02d", $number) . ',' . $monthTotal[sprintf("%02d", $number)] . ']';
-            
-              if ($number != 12) {
+
+            if ($number != 12) {
                 $chartval .= ',';
             }
         }
         $chartval = $chartval . ']';
-      
+
         return array(
             'chartval' => $chartval,
-        );    
-
+        );
     }
 
     /**
@@ -236,22 +233,20 @@ class dashboardController extends Controller {
      */
     public function jsonMostSoldAction() {
         //Get searched value
-//        $params = json_decode(file_get_contents('php://input'), true);
-//        $amount = $params['amount'];
         $amount = $_POST['amount'];
-        
+
         $em = $this->container->get('doctrine.orm.entity_manager');
         $qb = $em->createQueryBuilder();
 
-        $qb->select('s.productId, count(s.quantity) AS mcount, p.productTitle')
+        $qb->select('s.productId, sum(s.quantity) AS mcount, p.productTitle')
                 ->from('EagleAdminBundle:Sells', 's')
                 ->leftJoin('EagleShopBundle:Products', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 's.productId = p.id')
                 ->groupBy('s.productId')
                 ->orderBy("mcount", "DESC")
                 ->setMaxResults($amount);
-        
+
         $jsonArray = array();
-        
+
         if (sizeof($qb->getQuery()->getResult()) > 0) {
             foreach ($qb->getQuery()->getResult() as $key => $value) {
                 $jsonArray[$key] = array(
@@ -260,8 +255,8 @@ class dashboardController extends Controller {
                 );
             }
         }
-        
-         //convert to json using "JMSSerializerBundle"
+
+        //convert to json using "JMSSerializerBundle"
         $serializer = $this->container->get('serializer');
         $jsonArray = $serializer->serialize($jsonArray, 'json');
         return new Response($jsonArray);
@@ -328,6 +323,42 @@ class dashboardController extends Controller {
         $session->remove('user');
 
         return $this->redirect('/login', 301);
+    }
+
+    /**
+     * @Route("/rightNow")
+     * @Template()
+     */
+    public function rightNowAction() {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('count(p.id)')
+                ->from('EagleAdminBundle:Products', 'p');
+
+        $allProducts = $qb->getQuery()->getResult()[0][1];
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('count(pc.id)')
+                ->from('EagleAdminBundle:ProductCategory', 'pc');
+
+        $allCategories = $qb->getQuery()->getResult()[0][1];
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('sum(s.quantity)')
+                ->from('EagleAdminBundle:Sells', 's');
+
+        $allSales = $qb->getQuery()->getResult()[0][1];
+        
+        return $this->render('EagleAdminBundle:dashboard:rightNow.html.twig', array(
+            'allProducts' => $allProducts,
+            'allCategories' => $allCategories,
+            'allSales' => $allSales,
+        ));
     }
 
 }
