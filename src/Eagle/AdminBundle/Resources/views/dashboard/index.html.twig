@@ -3,136 +3,219 @@
 {% block title %}EagleAdminBundle:dashboard:index{% endblock %}
 
 {% block body %}    
-     
+
+    <style>
+        .ui-slider-vertical{
+            height: 200px;
+            margin-top: 13%;
+        }
+    </style>
+
+
+    <!--Body content-->
+    <div id="content" class="clearfix">
+        <div class="contentwrapper"><!--Content wrapper-->
+
+            <div class="heading">
+
+                <h3>Dashboard</h3>                    
+
+                <div class="resBtnSearch">
+                    <a href="#"><span class="icon16 brocco-icon-search"></span></a>
+                </div>
+
+                <div class="search">
 
 
 
-        <!--Body content-->
-        <div id="content" class="clearfix">
-            <div class="contentwrapper"><!--Content wrapper-->
+                </div><!-- End search -->
 
-                <div class="heading">
+            </div><!-- End .heading-->
 
-                    <h3>Dashboard</h3>                    
+            <!-- Build page from here: -->
 
-                    <div class="resBtnSearch">
-                        <a href="#"><span class="icon16 brocco-icon-search"></span></a>
-                    </div>
+            <div class="row-fluid">
 
-                    <div class="search">
+                <div class="span8">
 
-                       
-                
-                    </div><!-- End search -->
-                    
-                </div><!-- End .heading-->
+                    <div class="box chart gradient">
 
-                <!-- Build page from here: -->
-               
-                <div class="row-fluid">
+                        <div class="title">
 
-                    <div class="span8">
-
-                        <div class="box chart gradient">
-
-                            <div class="title">
-
-                                <h4>
-                                    <span class="icon16 icomoon-icon-bars"></span>
-                                    <span>Monthly Sales Chart ( X-day / Y-sales )</span>
-                                </h4>
-                                <a href="#" class="minimize">Minimize</a>
-                            </div>
-                            <div class="content" style="padding-bottom:0;">
-                               <div class="visitors-chart" style="height: 230px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
-                               <ul class="chartShortcuts">
-                                    <li>
-                                        <a href="#">
-                                            <span class="head">Total Sells</span>
-                                            <span class="number">{{ monthChart.sellsTotal }}</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="head">This month sells</span>
-                                            <span class="number">{{ monthChart.monthTotal }}</span>
-                                        </a>
-                                    </li>                                   
-                                </ul>
-                               
-                            </div>
-
-                        </div><!-- End .box -->
-
-                    </div><!-- End .span8 -->
-                    <div class="span4">
-
-                        <div class="reminder">
-                            <h4>Summery 
-                                <!--<a href="#" class="icon tip" title="Configure"><span class="icon16 iconic-icon-cog"></span></a>-->
+                            <h4>
+                                <span class="icon16 icomoon-icon-bars"></span>
+                                <span>Monthly Sales Chart ( X-day / Y-sales )</span>
                             </h4>
-                            <ul>
-                                <li class="clearfix">
-                                    <div class="icon">
-                                        <span class="icon32 iconic-icon-box gray"></span>
-                                    </div>
-                                    <span class="number">{{ summery.allProducts }}</span> 
-                                    <span class="txt">Products </span>
-                                    <a href="/products/view" class="btn btn-warning">go</a>
+                            <a href="#" class="minimize">Minimize</a>
+                        </div>
+                        <div class="content" style="padding-bottom:0;">
+                            <div class="visitors-chart" style="height: 230px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
+                            <ul class="chartShortcuts">
+                                <li>
+                                    <a href="#">
+                                        <span class="head">Total Sells</span>
+                                        <span class="number">{{ monthChart.sellsTotal }}</span>
+                                    </a>
                                 </li>
-                                <li class="clearfix">
-                                    <div class="icon">
-                                        <span class="icon32 brocco-icon-list red"></span>
-                                    </div>
-                                    <span class="number">{{ summery.allCategories }}</span> 
-                                    <span class="txt">Categories </span>
-                                    <a href="/productCategories/view" class="btn btn-warning">go</a>
-                                </li>
-                                <li class="clearfix">
-                                    <div class="icon">
-                                        <span class="icon32 icomoon-icon-box-add green"></span>
-                                    </div>
-                                    <span class="number">{{ summery.prsThsMnth }}</span> 
-                                    <span class="txt">Products added this month </span>
-                                    <a href="/products/add" class="btn btn-warning">go</a>
-                                </li>
-                                <li class="clearfix">
-                                    <div class="icon">
-                                        <span class="icon32 entypo-icon-add blue"></span>
-                                    </div>
-                                    <span class="number">{{ summery.catsThsMnth }}</span> 
-                                    <span class="txt">Categories added this month</span> 
-                                    <a href="/productCategories/add" class="btn btn-warning">go</a>
-                                </li>
-                                                             
+                                <li>
+                                    <a href="#">
+                                        <span class="head">This month sells</span>
+                                        <span class="number">{{ monthChart.monthTotal }}</span>
+                                    </a>
+                                </li>                                   
                             </ul>
-                        </div><!-- End .reminder -->
 
-                    </div><!-- End .span4 -->
-                    
+                        </div>
 
-                </div><!-- End .row-fluid -->
+                    </div><!-- End .box -->
 
-              
+                </div><!-- End .span8 -->
+                <div class="span4">
+
+                    <div class="reminder">
+                        <h4>Summery 
+                            <!--<a href="#" class="icon tip" title="Configure"><span class="icon16 iconic-icon-cog"></span></a>-->
+                        </h4>
+                        <ul>
+                            <li class="clearfix">
+                                <div class="icon">
+                                    <span class="icon32 iconic-icon-box gray"></span>
+                                </div>
+                                <span class="number">{{ summery.allProducts }}</span> 
+                                <span class="txt">Products </span>
+                                <a href="/products/view" class="btn btn-warning">go</a>
+                            </li>
+                            <li class="clearfix">
+                                <div class="icon">
+                                    <span class="icon32 brocco-icon-list red"></span>
+                                </div>
+                                <span class="number">{{ summery.allCategories }}</span> 
+                                <span class="txt">Categories </span>
+                                <a href="/productCategories/view" class="btn btn-warning">go</a>
+                            </li>
+                            <li class="clearfix">
+                                <div class="icon">
+                                    <span class="icon32 icomoon-icon-box-add green"></span>
+                                </div>
+                                <span class="number">{{ summery.prsThsMnth }}</span> 
+                                <span class="txt">Products added this month </span>
+                                <a href="/products/add" class="btn btn-warning">go</a>
+                            </li>
+                            <li class="clearfix">
+                                <div class="icon">
+                                    <span class="icon32 entypo-icon-add blue"></span>
+                                </div>
+                                <span class="number">{{ summery.catsThsMnth }}</span> 
+                                <span class="txt">Categories added this month</span> 
+                                <a href="/productCategories/add" class="btn btn-warning">go</a>
+                            </li>
+
+                        </ul>
+                    </div><!-- End .reminder -->
+
+                </div><!-- End .span4 -->
+
+
+            </div><!-- End .row-fluid -->
+
+            <div class="row-fluid">
+                <div class="span4">
+
+                    <div class="box gradient">
+
+                        <div class="title">
+
+                            <h4>
+                                <span class="icon16 icomoon-icon-pie"></span>
+                                <span>Most sold products with amount</span>
+                            </h4>
+                            <a href="#" class="minimize">Minimize</a>
+                        </div>
+                        <div class="content">
+                            <div class="row-fluid">
+                                <div class="span8">
+                                    <div class="pieStats" style="height: 240px; width:100%;">
+
+                                    </div>
+                                </div>
+                                <div class="span4">
+                                    <div id="slideCust1" style="float:right; margin-right: 7px;">
+
+                                    </div>
+                                    <input class="valAbc" type="text" style="width: 77%; float: left; text-align: center;" disabled value="{{mostSold.minProds ~ ' Top sold products'}}">
+                                </div>
+                            </div> 
+
+                        </div>
+
+                    </div><!-- End .box -->
+
+
+                </div><!-- End .span4 -->
                 
-            </div><!-- End contentwrapper -->
-        </div><!-- End #content -->
-    
-    </div><!-- End #wrapper -->
-    
-    <script type="text/javascript">
-        $(function () {
-		//some data
-		var d1 = {{ monthChart.chartval }};
-		//var d1 = {{ '[[01, 20], [2, 1], [3, 9+randNum()], [4, 12+randNum()],[5, 15+randNum()],[6, 18+randNum()],[7, 21+randNum()],[8, 15+randNum()],[9, 18+randNum()],[10, 21+randNum()],[11, 24+randNum()],[12, 27+randNum()],[13, 30+randNum()],[14, 33+randNum()],[15, 24+randNum()],[16, 27+randNum()],[17, 30+randNum()],[18, 33+randNum()],[19, 36+randNum()],[20, 39+randNum()],[21, 42+randNum()],[22, 45+randNum()],[23, 36+randNum()],[24, 39+randNum()],[25, 42+randNum()],[26, 45+randNum()],[27,38+randNum()],[28, 51+randNum()],[29, 55+randNum()], [30, 60+randNum()]]' }};
-		//var d2 = [[1, randNum()-5], [2, randNum()-4], [3, randNum()-4], [4, randNum()],[5, 4+randNum()],[6, 4+randNum()],[7, 5+randNum()],[8, 5+randNum()],[9, 6+randNum()],[10, 6+randNum()],[11, 6+randNum()],[12, 2+randNum()],[13, 3+randNum()],[14, 4+randNum()],[15, 4+randNum()],[16, 4+randNum()],[17, 5+randNum()],[18, 5+randNum()],[19, 2+randNum()],[20, 2+randNum()],[21, 3+randNum()],[22, 3+randNum()],[23, 3+randNum()],[24, 2+randNum()],[25, 4+randNum()],[26, 4+randNum()],[27,5+randNum()],[28, 2+randNum()],[29, 2+randNum()], [30, 3+randNum()], [31, 3+randNum()]];
-		//define placeholder class
-		var placeholder = $(".visitors-chart");
-		//graph options
+                <div class="span8">
+
+                            <div class="box chart">
+
+                                <div class="title">
+
+                                    <h4>
+                                        <span class="icon16 icomoon-icon-bars"></span>
+                                        <span>Annual Sales Chart ( X-month / Y-sales )</span>
+                                    </h4>
+                                    <a href="#" class="minimize">Minimize</a>
+                                </div>
+                                <div class="content">
+                                   <div class="order-bars-chart2" style="height: 230px;width:100%;">
+
+                                    </div>
+                                </div>
+
+                            </div><!-- End .box -->
+                        
+                        </div><!-- End .span6 -->
+
+            </div><!-- End .row-fluid -->    
+
+
+        </div><!-- End contentwrapper -->
+    </div><!-- End #content -->
+
+</div><!-- End #wrapper -->
+
+<script type="text/javascript">
+    $(function () {
+        
+        	//some data
+		var d1 = [];
+	  {#  for (var i = 0; i <= 5; i += 1)
+	        d1.push([i, parseInt(Math.random() * 30)]);#}	 
+{#           d1 = [[01,0],[02,18],[03,0],[04,0],[05,0],[06,0],[07,0],[08,0],[09,0],[10,0],[11,0],[12,0]];             #}
+           d1 = {{ yearSold.chartval }};             
+	 
+	    var ds = new Array();            
+	 
+	     ds.push({
+	     	label: "Data One",
+	        data:d1,
+	        bars: {order: 1}
+	    });
+	  
+
+var ticks = [
+    [1, "January"], [2, "February"],[3, "March"], [4, "April"],[5, "June"], [6, "July"],[7, "January"], [8, "August"],[9, "September"], [10, "October"],[11, "November"], [12, "December"]
+];
+
 		var options = {
+				bars: {
+					show:true,
+					barWidth: 0.2,
+					fill:1,
+                                        align: "center",
+				},
 				grid: {
-                                    show: true,
-				    aboveData: true,
+					show: true,
+				    aboveData: false,
 				    color: "#3f3f3f" ,
 				    labelMargin: 5,
 				    axisMargin: 0, 
@@ -141,62 +224,214 @@
 				    minBorderMargin: 5 ,
 				    clickable: true, 
 				    hoverable: true,
-				    autoHighlight: true,
+				    autoHighlight: false,
 				    mouseActiveRadius: 20
 				},
+                                xaxis: {ticks: ticks, tickDecimals: 0},
 		        series: {
-		        	grow: {
-		        		active: false,
-		        		stepMode: "linear",
-		        		steps: 50,
-		        		stepDelay: true
-		        	},
-		            lines: {
-	            		show: true,
-	            		fill: true,
-	            		lineWidth: 4,
-	            		steps: false
-		            	},
-		            points: {
-		            	show:true,
-		            	radius: 5,
-		            	symbol: "circle",
-		            	fill: true,
-		            	borderColor: "#fff",
-		            }
+		        	grow: {active:false}
 		        },
 		        legend: { 
-		        	position: "ne", 
-		        	margin: [0,-25], 
-		        	noColumns: 0,
-		        	labelBoxBorderColor: null,
-		        	labelFormatter: function(label, series) {
-					    // just add some space to labes
-					    return label+'&nbsp;&nbsp;';
-					 }
-		    	},
-		        yaxis: { min: 0},
-		        xaxis: {ticks:31, tickDecimals: 0},
+                            position: "ne",
+                            show: false
+                        },
 		        colors: chartColours,
-		        shadowSize:1,
 		        tooltip: true, //activate tooltip
 				tooltipOpts: {
-					content: "Day %x.0 Sales : %y.0",
+					content: "Sold products : %y.0",
 					shifts: {
 						x: -30,
 						y: -50
 					}
 				}
-		    };   
-	
-        	$.plot(placeholder, [ 
+		};
+                
 
-        		{
-        			label: "Sales for this month", 
-        			data: d1,
-        			lines: {fillColor: "#f2f7f9"},
-        			points: {fillColor: "#88bbc8"}
-        		}
+		$.plot($(".order-bars-chart2"), ds, options);
+        
+        
+        
+        $("#slideCust1").slider({
+        range: "min",
+                min: 0,
+                max:{{ mostSold.maxProds }},
+                value:{{ mostSold.minProds }},
+                orientation: "vertical",
+                slide: function (event, ui) {
+    {#			$( "#amount3" ).val("Minimum number of bedrooms:" + ui.value );#}
+                    $('.valAbc').val(ui.value + ' Top sold products');
+                    $.post('{{ app.request.getSchemeAndHttpHost() }}/global/jsonMostSold', {amount: ui.value}, function (data) {
+                        var data = JSON.parse(data);
+                        $.plot($(".pieStats"), data,
+                                {
+                                    series: {
+                                        pie: {
+                                            show: true,
+                                            highlight: {
+                                                opacity: 0.1
+                                            },
+                                            radius: 1,
+                                            stroke: {
+                                                color: '#fff',
+                                                width: 3
+                                            },
+                                            startAngle: 2,
+                                            label: {
+                                                show: false,
+                                                radius: 1
+                                            }
+                                        },
+                                        grow: {active: false},
+                                    },
+                                    legend: {
+                                        show: false,
+                                        position: "ne",
+                                        labelBoxBorderColor: null
+                                    },
+                                    grid: {
+                                        hoverable: true,
+                                        clickable: true
+                                    },
+                                    tooltip: true, //activate tooltip
+                                    tooltipOpts: {
+                                        content: "%s : %y.0",
+                                        shifts: {
+                                            x: -30,
+                                            y: -50
+                                        }
+                                    }
+                                });
+                    });
+                    }
+        });
+
+    {#            var data = [{label: 'CN Clogs Beach',data: 5},{label: 'Prod my prod',data: 5},{label: 'New Pro',data: 3}];#}
+        var data = {{ mostSold.jsonArray | raw }};        {#  var data = [
+              {label: "USA", data: 38},
+              {label: "Brazil", data: 23},
+              {label: "India", data: 15},
+              {label: "Turkey", data: 9},
+              {label: "France", data: 7},
+              {label: "China", data: 5},
+              {label: "Germany", data: 3}
+          ];#}
+
+                      $.plot($(".pieStats"), data,
+                      {
+                      series: {
+                      pie: {
+                      show: true,
+                              highlight: {
+                              opacity: 0.1
+                              },
+                              radius: 1,
+                              stroke: {
+                              color: '#fff',
+                                      width: 3
+                              },
+                              startAngle: 2,
+                              label: {
+                              show: false,
+                                      radius: 1
+                              }
+                      },
+                              grow: {active: false},
+                      },
+                              legend: {
+                              show: false,
+                                      position: "ne",
+                                      labelBoxBorderColor: null
+                              },
+                              grid: {
+                              hoverable: true,
+                                      clickable: true
+                              },
+                              tooltip: true, //activate tooltip
+                              tooltipOpts: {
+                              content: "%s : %y.0",
+                                      shifts: {
+                                      x: - 30,
+                                              y: - 50
+                                      }
+                              }
+                      });
+              });
+                      $(function () {
+                          //some data
+                          var d1
+                                  = {{ monthChart.chartval }};
+                                  //var d1 = {{ '[[01, 20], [2, 1], [3, 9+randNum()], [4, 12+randNum()],[5, 15+randNum()],[6, 18+randNum()],[7, 21+randNum()],[8, 15+randNum()],[9, 18+randNum()],[10, 21+randNum()],[11, 24+randNum()],[12, 27+randNum()],[13, 30+randNum()],[14, 33+randNum()],[15, 24+randNum()],[16, 27+randNum()],[17, 30+randNum()],[18, 33+randNum()],[19, 36+randNum()],[20, 39+randNum()],[21, 42+randNum()],[22, 45+randNum()],[23, 36+randNum()],[24, 39+randNum()],[25, 42+randNum()],[26, 45+randNum()],[27,38+randNum()],[28, 51+randNum()],[29, 55+randNum()], [30, 60+randNum()]]' }};
+                                  //var d2 = [[1, randNum()-5], [2, randNum()-4], [3, randNum()-4], [4, randNum()],[5, 4+randNum()],[6, 4+randNum()],[7, 5+randNum()],[8, 5+randNum()],[9, 6+randNum()],[10, 6+randNum()],[11, 6+randNum()],[12, 2+randNum()],[13, 3+randNum()],[14, 4+randNum()],[15, 4+randNum()],[16, 4+randNum()],[17, 5+randNum()],[18, 5+randNum()],[19, 2+randNum()],[20, 2+randNum()],[21, 3+randNum()],[22, 3+randNum()],[23, 3+randNum()],[24, 2+randNum()],[25, 4+randNum()],[26, 4+randNum()],[27,5+randNum()],[28, 2+randNum()],[29, 2+randNum()], [30, 3+randNum()], [31, 3+randNum()]];
+                                  //define placeholder class
+                                  var placeholder = $(".visitors-chart");
+                          //graph options
+                          var options = {
+                              grid: {
+                                  show: true,
+                                  aboveData: true,
+                                  color: "#3f3f3f",
+                                  labelMargin: 5,
+                                  axisMargin: 0,
+                                  borderWidth: 0,
+                                  borderColor: null,
+                                  minBorderMargin: 5,
+                                  clickable: true,
+                                  hoverable: true,
+                                  autoHighlight: true,
+                                  mouseActiveRadius: 20
+                              },
+                              series: {
+                                  grow: {
+                                      active: false,
+                                      stepMode: "linear",
+                                      steps: 50,
+                                      stepDelay: true
+                                  },
+                                  lines: {
+                                      show: true,
+                                      fill: true,
+                                      lineWidth: 4,
+                                      steps: false
+                                  },
+                                  points: {
+                                      show: true,
+                                      radius: 5,
+                                      symbol: "circle",
+                                      fill: true,
+                                      borderColor: "#fff",
+                                  }
+                              },
+                              legend: {
+                                  position: "ne",
+                                  margin: [0, -25],
+                                  noColumns: 0,
+                                  labelBoxBorderColor: null,
+                                  labelFormatter: function (label, series) {
+                                      // just add some space to labes
+                                      return label + '&nbsp;&nbsp;';
+                                  }
+                              },
+                              yaxis: {min: 0},
+                              xaxis: {ticks: 31, tickDecimals: 0},
+                              colors: chartColours,
+                              shadowSize: 1,
+                              tooltip: true, //activate tooltip
+                              tooltipOpts: {
+                                  content: "Day %x.0 Sales : %y.0",
+                                  shifts: {
+                                      x: -30,
+                                      y: -50
+                                  }
+                              }
+                          };
+
+                          $.plot(placeholder, [
+                              {
+                                  label: "Sales for this month",
+                                  data: d1,
+                                  lines: {fillColor: "#f2f7f9"},
+                                  points: {fillColor: "#88bbc8"}
+                              }
 //        		{	
 //        			label: "This month", 
 //        			data: d2,
@@ -204,74 +439,74 @@
 //        			points: {fillColor: "#ed7a53"}
 //        		} 
 
-        	], options);
-	        
-        });
-    </script>
-    
-    <!-- Le javascript
-    ================================================== -->
-   {# <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>  
-    <script type="text/javascript" src="js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+                          ], options);
 
-    <!-- Load plugins -->
-    <script type="text/javascript" src="plugins/qtip/jquery.qtip.min.js"></script>
-    <script type="text/javascript" src="plugins/flot/jquery.flot.js"></script>
-    <script type="text/javascript" src="plugins/flot/jquery.flot.grow.js"></script>
-    <script type="text/javascript" src="plugins/flot/jquery.flot.pie.js"></script>
-    <script type="text/javascript" src="plugins/flot/jquery.flot.resize.js"></script>
-    <script type="text/javascript" src="plugins/flot/jquery.flot.tooltip_0.4.4.js"></script>
-    <script type="text/javascript" src="plugins/flot/jquery.flot.orderBars.js"></script>
+                      });
+</script>
 
-    <script type="text/javascript" src="plugins/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="plugins/knob/jquery.knob.js"></script>
-    <script type="text/javascript" src="plugins/fullcalendar/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="plugins/prettify/prettify.js"></script>
+<!-- Le javascript
+================================================== -->
+{# <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+ <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>  
+ <script type="text/javascript" src="js/jquery.cookie.js"></script>
+ <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
 
-    <script type="text/javascript" src="plugins/watermark/jquery.watermark.min.js"></script>
-    <script type="text/javascript" src="plugins/elastic/jquery.elastic.js"></script>
-    <script type="text/javascript" src="plugins/inputlimiter/jquery.inputlimiter.1.3.min.js"></script>
-    <script type="text/javascript" src="plugins/maskedinput/jquery.maskedinput-1.3.min.js"></script>
-    <script type="text/javascript" src="plugins/ibutton/jquery.ibutton.min.js"></script>
-    <script type="text/javascript" src="plugins/uniform/jquery.uniform.min.js"></script>
-    <script type="text/javascript" src="plugins/stepper/ui.stepper.js"></script>
-    <script type="text/javascript" src="plugins/color-picker/colorpicker.js"></script>
-    <script type="text/javascript" src="plugins/timeentry/jquery.timeentry.min.js"></script>
-    <script type="text/javascript" src="plugins/select/select2.min.js"></script>
-    <script type="text/javascript" src="plugins/dualselect/jquery.dualListBox-1.3.min.js"></script>
-    <script type="text/javascript" src="plugins/tiny_mce/jquery.tinymce.js"></script>
-    <script type="text/javascript" src="plugins/validate/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="plugins/search/tipuesearch_set.js"></script>
-    <script type="text/javascript" src="plugins/search/tipuesearch_data.js"></script><!-- JSON for searched results -->
-    <script type="text/javascript" src="plugins/search/tipuesearch.js"></script>
+ <!-- Load plugins -->
+ <script type="text/javascript" src="plugins/qtip/jquery.qtip.min.js"></script>
+ <script type="text/javascript" src="plugins/flot/jquery.flot.js"></script>
+ <script type="text/javascript" src="plugins/flot/jquery.flot.grow.js"></script>
+ <script type="text/javascript" src="plugins/flot/jquery.flot.pie.js"></script>
+ <script type="text/javascript" src="plugins/flot/jquery.flot.resize.js"></script>
+ <script type="text/javascript" src="plugins/flot/jquery.flot.tooltip_0.4.4.js"></script>
+ <script type="text/javascript" src="plugins/flot/jquery.flot.orderBars.js"></script>
 
-    <script type="text/javascript" src="plugins/animated-progress-bar/jquery.progressbar.js"></script>
-    <script type="text/javascript" src="plugins/pnotify/jquery.pnotify.min.js"></script>
-    <script type="text/javascript" src="plugins/lazy-load/jquery.lazyload.min.js"></script>
-    <script type="text/javascript" src="plugins/jpages/jPages.min.js"></script>
-    <script type="text/javascript" src="plugins/pretty-photo/jquery.prettyPhoto.js"></script>
-    <script type="text/javascript" src="plugins/smartWizzard/jquery.smartWizard-2.0.min.js"></script>
+ <script type="text/javascript" src="plugins/sparkline/jquery.sparkline.min.js"></script>
+ <script type="text/javascript" src="plugins/knob/jquery.knob.js"></script>
+ <script type="text/javascript" src="plugins/fullcalendar/fullcalendar.min.js"></script>
+ <script type="text/javascript" src="plugins/prettify/prettify.js"></script>
 
-    <script type="text/javascript" src="plugins/ios-fix/ios-orientationchange-fix.js"></script>
+ <script type="text/javascript" src="plugins/watermark/jquery.watermark.min.js"></script>
+ <script type="text/javascript" src="plugins/elastic/jquery.elastic.js"></script>
+ <script type="text/javascript" src="plugins/inputlimiter/jquery.inputlimiter.1.3.min.js"></script>
+ <script type="text/javascript" src="plugins/maskedinput/jquery.maskedinput-1.3.min.js"></script>
+ <script type="text/javascript" src="plugins/ibutton/jquery.ibutton.min.js"></script>
+ <script type="text/javascript" src="plugins/uniform/jquery.uniform.min.js"></script>
+ <script type="text/javascript" src="plugins/stepper/ui.stepper.js"></script>
+ <script type="text/javascript" src="plugins/color-picker/colorpicker.js"></script>
+ <script type="text/javascript" src="plugins/timeentry/jquery.timeentry.min.js"></script>
+ <script type="text/javascript" src="plugins/select/select2.min.js"></script>
+ <script type="text/javascript" src="plugins/dualselect/jquery.dualListBox-1.3.min.js"></script>
+ <script type="text/javascript" src="plugins/tiny_mce/jquery.tinymce.js"></script>
+ <script type="text/javascript" src="plugins/validate/jquery.validate.min.js"></script>
+ <script type="text/javascript" src="plugins/search/tipuesearch_set.js"></script>
+ <script type="text/javascript" src="plugins/search/tipuesearch_data.js"></script><!-- JSON for searched results -->
+ <script type="text/javascript" src="plugins/search/tipuesearch.js"></script>
 
-    <script type="text/javascript" src="plugins/dataTables/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="plugins/elfinder/elfinder.min.js"></script>
-    <script type="text/javascript" src="plugins/plupload/plupload.js"></script>
-    <script type="text/javascript" src="plugins/plupload/plupload.html4.js"></script>
-    <script type="text/javascript" src="plugins/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+ <script type="text/javascript" src="plugins/animated-progress-bar/jquery.progressbar.js"></script>
+ <script type="text/javascript" src="plugins/pnotify/jquery.pnotify.min.js"></script>
+ <script type="text/javascript" src="plugins/lazy-load/jquery.lazyload.min.js"></script>
+ <script type="text/javascript" src="plugins/jpages/jPages.min.js"></script>
+ <script type="text/javascript" src="plugins/pretty-photo/jquery.prettyPhoto.js"></script>
+ <script type="text/javascript" src="plugins/smartWizzard/jquery.smartWizard-2.0.min.js"></script>
 
-    <!-- Init plugins -->
-    <script type="text/javascript" src="js/statistic.js"></script><!-- Control graphs ( chart, pies and etc) -->
+ <script type="text/javascript" src="plugins/ios-fix/ios-orientationchange-fix.js"></script>
 
-    <!-- Important Place before main.js  -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="plugins/touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+ <script type="text/javascript" src="plugins/dataTables/jquery.dataTables.min.js"></script>
+ <script type="text/javascript" src="plugins/elfinder/elfinder.min.js"></script>
+ <script type="text/javascript" src="plugins/plupload/plupload.js"></script>
+ <script type="text/javascript" src="plugins/plupload/plupload.html4.js"></script>
+ <script type="text/javascript" src="plugins/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+
+ <!-- Init plugins -->
+ <script type="text/javascript" src="js/statistic.js"></script><!-- Control graphs ( chart, pies and etc) -->
+
+ <!-- Important Place before main.js  -->
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+ <script type="text/javascript" src="plugins/touch-punch/jquery.ui.touch-punch.min.js"></script>
+ <script type="text/javascript" src="js/main.js"></script>
 #}
 
-    </body>
+</body>
 
-    
+
 {% endblock %}

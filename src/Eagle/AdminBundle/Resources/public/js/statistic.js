@@ -211,49 +211,49 @@ $(document).ready(function() {
 
 	//pie visits graph
 	if (divElement.hasClass('pieStats')) {
-	$(function () {
-	   var data = [
-		    { label: "%78.75 New Visitor",  data: 78.75, color: "#88bbc8"},
-		    { label: "%21.25 Returning Visitor",  data: 21.25, color: "#ed7a53"}
-		];
-		
-		$.plot($(".pieStats"), data, 
-		{
-			series: {
-				pie: { 
-					show: true,
-					highlight: {
-						opacity: 0.1
-					},
-					stroke: {
-						color: '#fff',
-						width: 3
-					},
-					startAngle: 2,
-					label: {
-						radius:1
-					}
-				},
-				grow: {	active: false},
-			},
-			legend: { 
-	        	position: "ne", 
-	        	labelBoxBorderColor: null
-	    	},
-			grid: {
-	            hoverable: true,
-	            clickable: true
-	        },
-	        tooltip: true, //activate tooltip
-			tooltipOpts: {
-				content: "%s : %y.1",
-				shifts: {
-					x: -30,
-					y: -50
-				}
-			}
-		});
-	});
+//	$(function () {
+//	   var data = [
+//		    { label: "%78.75 New Visitor",  data: 78.75, color: "#88bbc8"},
+//		    { label: "%21.25 Returning Visitor",  data: 21.25, color: "#ed7a53"}
+//		];
+//		
+//		$.plot($(".pieStats"), data, 
+//		{
+//			series: {
+//				pie: { 
+//					show: true,
+//					highlight: {
+//						opacity: 0.1
+//					},
+//					stroke: {
+//						color: '#fff',
+//						width: 3
+//					},
+//					startAngle: 2,
+//					label: {
+//						radius:1
+//					}
+//				},
+//				grow: {	active: false},
+//			},
+//			legend: { 
+//	        	position: "ne", 
+//	        	labelBoxBorderColor: null
+//	    	},
+//			grid: {
+//	            hoverable: true,
+//	            clickable: true
+//	        },
+//	        tooltip: true, //activate tooltip
+//			tooltipOpts: {
+//				content: "%s : %y.1",
+//				shifts: {
+//					x: -30,
+//					y: -50
+//				}
+//			}
+//		});
+//	});
 	}//end if
 
 	//------------- Graphs for chart.html page -------------//

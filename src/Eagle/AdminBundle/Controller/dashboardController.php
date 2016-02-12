@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Eagle\AdminBundle\Entity\Task;
 use Symfony\Component\Form\FormError;
 
@@ -21,12 +22,57 @@ class dashboardController extends Controller {
 
         if ($user === NULL) {
             return $this->redirect('/login', 301);
-        }        
+        }
+
+        $this->yearSold();
 
         return $this->render("EagleAdminBundle:dashboard:index.html.twig", array(
                     'monthChart' => $this->monthChart(),
-                    'summery' => $this->summery()
+                    'summery' => $this->summery(),
+                    'mostSold' => $this->mostSold(),
+                    'yearSold' => $this->yearSold()
         ));
+    }
+
+    public function mostSold() {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s.productId, count(s.quantity) AS mcount, p.productTitle')
+                ->from('EagleAdminBundle:Sells', 's')
+                ->leftJoin('EagleShopBundle:Products', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 's.productId = p.id')
+                ->groupBy('s.productId')
+                ->orderBy("mcount", "DESC")
+                ->setMaxResults(20);
+
+        $minProds = 5;
+        $maxProds = 20;
+        $jsonArray = array();
+        $noOfProds = sizeof($qb->getQuery()->getResult());
+        if ($noOfProds < $minProds) {
+            $minProds = $noOfProds;
+        }
+
+        if ($noOfProds < $maxProds) {
+            $maxProds = $noOfProds;
+        }
+
+        if (sizeof($qb->getQuery()->getResult()) > 0) {
+            foreach ($qb->getQuery()->getResult() as $key => $value) {
+                $jsonArray[$key] = array(
+                    'label' => $value['productTitle'],
+                    'data' => (int) $value['mcount']
+                );
+            }
+        }
+
+        $jsonArray = json_encode($jsonArray);
+
+        return array(
+            'jsonArray' => $jsonArray,
+            'minProds' => $minProds,
+            'maxProds' => $maxProds
+        );
     }
 
     public function summery() {
@@ -52,25 +98,25 @@ class dashboardController extends Controller {
         $qb->select('count(p.id)')
                 ->from('EagleAdminBundle:Products', 'p')
                 ->andWhere('p.createdAt LIKE :date')
-                ->setParameter('date', date('Y-m-d')."%");
+                ->setParameter('date', date('Y-m-d') . "%");
 
         $prsThsMnth = $qb->getQuery()->getResult()[0][1];
-        
+
         $em = $this->container->get('doctrine.orm.entity_manager');
         $qb = $em->createQueryBuilder();
 
         $qb->select('count(pc.id)')
                 ->from('EagleAdminBundle:ProductCategory', 'pc')
                 ->andWhere('pc.createdAt LIKE :date')
-                ->setParameter('date', date('Y-m-d')."%");
+                ->setParameter('date', date('Y-m-d') . "%");
 
         $catsThsMnth = $qb->getQuery()->getResult()[0][1];
-        
+
         return array(
             'allProducts' => $allProducts,
             'allCategories' => $allCategories,
             'prsThsMnth' => $prsThsMnth,
-            'catsThsMnth' => $catsThsMnth,
+            'catsThsMnth' => $catsThsMnth
         );
     }
 
@@ -126,6 +172,99 @@ class dashboardController extends Controller {
         );
 
         return $monthChart;
+    }
+    
+    public function yearSold() {
+        //        Get chart values
+        $prods = array();
+        $monthTotal = array(
+            '01' => 0,
+            '02' => 0,
+            '03' => 0,
+            '04' => 0,
+            '05' => 0,
+            '06' => 0,
+            '07' => 0,
+            '08' => 0,
+            '09' => 0,
+            '10' => 0,
+            '11' => 0,
+            '12' => 0
+        );
+        $chartval = '';
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s.date, sum(s.quantity)')
+                ->from('EagleAdminBundle:Sells', 's')
+                ->groupBy('s.date');
+
+        $sold = $qb->getQuery()->getResult();
+        
+        
+        
+        if ($sold != null) {
+            foreach ($sold as $value) {
+                if (date("Y") == substr($value['date'], 6, 4)) {
+                   if (date('m') == substr($value['date'], 3, 2)) {
+                       $monthTotal[date('m')] += $value['1'];
+                   }             
+                }
+            }
+        }
+
+        $chartval = '[';
+        foreach (range(1, count($monthTotal)) as $number) {
+            $chartval .= '[' . sprintf("%02d", $number) . ',' . $monthTotal[sprintf("%02d", $number)] . ']';
+            
+              if ($number != 12) {
+                $chartval .= ',';
+            }
+        }
+        $chartval = $chartval . ']';
+      
+        return array(
+            'chartval' => $chartval,
+        );    
+
+    }
+
+    /**
+     * @Route("global/jsonMostSold")
+     * @Template()
+     */
+    public function jsonMostSoldAction() {
+        //Get searched value
+//        $params = json_decode(file_get_contents('php://input'), true);
+//        $amount = $params['amount'];
+        $amount = $_POST['amount'];
+        
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s.productId, count(s.quantity) AS mcount, p.productTitle')
+                ->from('EagleAdminBundle:Sells', 's')
+                ->leftJoin('EagleShopBundle:Products', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 's.productId = p.id')
+                ->groupBy('s.productId')
+                ->orderBy("mcount", "DESC")
+                ->setMaxResults($amount);
+        
+        $jsonArray = array();
+        
+        if (sizeof($qb->getQuery()->getResult()) > 0) {
+            foreach ($qb->getQuery()->getResult() as $key => $value) {
+                $jsonArray[$key] = array(
+                    'label' => $value['productTitle'],
+                    'data' => (int) $value['mcount']
+                );
+            }
+        }
+        
+         //convert to json using "JMSSerializerBundle"
+        $serializer = $this->container->get('serializer');
+        $jsonArray = $serializer->serialize($jsonArray, 'json');
+        return new Response($jsonArray);
     }
 
     /**
