@@ -190,6 +190,21 @@ class dashboardController extends Controller {
             '12' => 0
         );
         $chartval = '';
+        $chartval2 = '';
+        $monthTotal2 = array(
+            '01' => 0,
+            '02' => 0,
+            '03' => 0,
+            '04' => 0,
+            '05' => 0,
+            '06' => 0,
+            '07' => 0,
+            '08' => 0,
+            '09' => 0,
+            '10' => 0,
+            '11' => 0,
+            '12' => 0
+        );
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $qb = $em->createQueryBuilder();
@@ -200,18 +215,19 @@ class dashboardController extends Controller {
 
         $sold = $qb->getQuery()->getResult();
 
-
+        
 
         if ($sold != null) {
             foreach ($sold as $value) {
                 if (date("Y") == substr($value['date'], 6, 4)) {
-                    if (date('m') == substr($value['date'], 3, 2)) {
-                        $monthTotal[date('m')] += $value['1'];
-                    }
-                }
+                    $monthTotal[substr($value['date'], 3, 2)] += $value['1'];
+                }elseif ((int)date("Y") - 1 == substr($value['date'], 6, 4)) {
+                   $monthTotal2[substr($value['date'], 3, 2)] += $value['1'];
+                }                    
             }
         }
 
+        // Get this year sales
         $chartval = '[';
         foreach (range(1, count($monthTotal)) as $number) {
             $chartval .= '[' . sprintf("%02d", $number) . ',' . $monthTotal[sprintf("%02d", $number)] . ']';
@@ -222,8 +238,20 @@ class dashboardController extends Controller {
         }
         $chartval = $chartval . ']';
 
+        // Get last year sales
+        $chartval2 = '[';
+        foreach (range(1, count($monthTotal2)) as $number) {
+            $chartval2 .= '[' . sprintf("%02d", $number) . ',' . $monthTotal2[sprintf("%02d", $number)] . ']';
+
+            if ($number != 12) {
+                $chartval2 .= ',';
+            }
+        }
+        $chartval2 = $chartval2 . ']';        
+
         return array(
             'chartval' => $chartval,
+            'chartval2' => $chartval2,
         );
     }
 

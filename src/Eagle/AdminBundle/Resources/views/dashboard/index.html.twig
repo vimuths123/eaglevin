@@ -177,6 +177,30 @@
 
             </div><!-- End .row-fluid -->    
 
+            <div class="row-fluid">
+                 <div class="span12">
+
+                            <div class="box chart">
+
+                                <div class="title">
+
+                                    <h4>
+                                        <span class="icon16 icomoon-icon-bars"></span>
+                                        <span>This and last year sales comparison( X-month / Y-sales )</span>
+                                    </h4>
+                                    <a href="#" class="minimize">Minimize</a>
+                                </div>
+                                <div class="content">
+                                   <div class="compare-chart" style="height: 230px;width:100%;">
+
+                                    </div>
+                                </div>
+
+                            </div><!-- End .box -->
+                        
+                        </div><!-- End .span6 -->              
+              
+            </div><!-- End .row-fluid -->    
 
         </div><!-- End contentwrapper -->
     </div><!-- End #content -->
@@ -185,13 +209,99 @@
 
 <script type="text/javascript">
     $(function () {
+
+
+{# Compare chart #}
+//some data
+    var d1 = [];
+    {#  for (var i = 0; i <= 5; i += 1)
+          d1.push([i, parseInt(Math.random() * 30)]);#}  
+{#           d1 = [[01,0],[02,18],[03,0],[04,0],[05,0],[06,0],[07,0],[08,0],[09,0],[10,0],[11,0],[12,0]];             #}
+           d1 = {{ yearSold.chartval }};   
+           d2 = {{ yearSold.chartval2 }};        
+   
+      var ds = new Array();            
+   
+      ds.push({
+        label: "This year",
+          data:d1,
+          bars: {order: 1}
+      });
+      
+      ds.push({
+        label: "Last year",
+          data:d2,
+          bars: {order: 2}
+      }); 
+
+var ticks = [
+    [1, "January"], [2, "February"],[3, "March"], [4, "April"],[5, "June"], [6, "July"],[7, "January"], [8, "August"],[9, "September"], [10, "October"],[11, "November"], [12, "December"]
+];
+
+    var options = {
+        bars: {
+          show:true,
+          barWidth: 0.2,
+          lineWidth: 0.5,
+          fill:1,
+          align: "center",
+        },
+        grid: {
+          show: true,
+            aboveData: false,
+            color: "#3f3f3f" ,
+            labelMargin: 5,
+            axisMargin: 0, 
+            borderWidth: 0,
+            borderColor:null,
+            minBorderMargin: 5 ,
+            clickable: true, 
+            hoverable: true,
+            autoHighlight: false,
+            mouseActiveRadius: 20
+        },
+                                xaxis: {ticks: ticks, tickDecimals: 0},
+            series: {
+              grow: {active:false}
+            },
+            legend: { 
+                            position: "ne"
+                        },
+            colors: chartColours,
+            tooltip: true, //activate tooltip
+        tooltipOpts: {
+          content: "Sold products : %y.0",
+          shifts: {
+            x: -30,
+            y: -50
+          }
+        }
+    };
+                
+
+    $.plot($(".compare-chart"), ds, options);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         	//some data
 		var d1 = [];
 	  {#  for (var i = 0; i <= 5; i += 1)
 	        d1.push([i, parseInt(Math.random() * 30)]);#}	 
 {#           d1 = [[01,0],[02,18],[03,0],[04,0],[05,0],[06,0],[07,0],[08,0],[09,0],[10,0],[11,0],[12,0]];             #}
-           d1 = {{ yearSold.chartval }};             
+           d1 = {{ yearSold.chartval }};   
+          {#  d2 = {{ yearSold.chartval }}; #}         
 	 
 	    var ds = new Array();            
 	 
@@ -200,7 +310,12 @@
 	        data:d1,
 	        bars: {order: 1}
 	    });
-	  
+  	  
+      {# ds.push({
+        label: "Data Two",
+          data:d2,
+          bars: {order: 2}
+      }); #}
 
 var ticks = [
     [1, "January"], [2, "February"],[3, "March"], [4, "April"],[5, "June"], [6, "July"],[7, "January"], [8, "August"],[9, "September"], [10, "October"],[11, "November"], [12, "December"]
@@ -210,8 +325,9 @@ var ticks = [
 				bars: {
 					show:true,
 					barWidth: 0.2,
+          lineWidth: 0.5,
 					fill:1,
-                                        align: "center",
+          align: "center",
 				},
 				grid: {
 					show: true,
