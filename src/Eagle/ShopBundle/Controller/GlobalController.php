@@ -312,9 +312,11 @@ class GlobalController extends Controller {
 
         $qb = $em->createQueryBuilder();
 
-        $qb->select('p')
+        $qb->select('p.description, p.productTitle, p.id, p.price, pi.imgUrl')
                 ->from('EagleAdminBundle:Products', 'p')
-                ->orderBy('p.id', 'DESC');
+                ->leftJoin('EagleShopBundle:ProuctImage', 'pi', \Doctrine\ORM\Query\Expr\Join::WITH, 'pi.productId = p.id')
+                ->orderBy('p.id', 'DESC')
+                ->groupBy('p.id');
 
         if ($category != 0) {
             $qb->andWhere('p.category = :category')
