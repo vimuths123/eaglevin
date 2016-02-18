@@ -332,12 +332,12 @@ angular.module("view_app", ["checklist-model"], function($interpolateProvider) {
 //<-----------delete multiple products at once------------------>   
     $scope.allDelete = function() {
         var deleteUser = window.confirm('Are you absolutely sure you want to delete?');
-
+        
         if (deleteUser) {
             if (!ids.length) {
                 alert("You haven't select any product to delete..");
             } else {
-                $http.post(urlseg + "products/multiDelete", {ids: ids}).success(function(data) {
+                $http.post(urlseg + "products/multiDelete", {ids: $scope.chkedProducts.ids}).success(function(data) {
                     $scope.allproducts = data;
                     $scope.totalProduct = Object.keys($scope.allproducts).length;
                     $scope.firstEntry = 1;
@@ -388,6 +388,8 @@ angular.module("view_app", ["checklist-model"], function($interpolateProvider) {
 
                     $('#pagination_div').bootstrapPaginator(options);
                 });
+                
+                $scope.chkedProducts.ids = [];
             }
         }
     };

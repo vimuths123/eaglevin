@@ -32,6 +32,151 @@ class dashboardController extends Controller {
         ));
     }
 
+    /**
+     * @Route("dashboard/report")
+     * @Template()
+     */
+    public function reportAction() {
+
+//        Get this year and last year sold products
+        $prods = array();
+        $monthTotal = array(
+            '01' => 0,
+            '02' => 0,
+            '03' => 0,
+            '04' => 0,
+            '05' => 0,
+            '06' => 0,
+            '07' => 0,
+            '08' => 0,
+            '09' => 0,
+            '10' => 0,
+            '11' => 0,
+            '12' => 0
+        );
+        $chartval = '';
+        $chartval2 = '';
+        $monthTotal2 = array(
+            '01' => 0,
+            '02' => 0,
+            '03' => 0,
+            '04' => 0,
+            '05' => 0,
+            '06' => 0,
+            '07' => 0,
+            '08' => 0,
+            '09' => 0,
+            '10' => 0,
+            '11' => 0,
+            '12' => 0
+        );
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s.date, sum(s.quantity)')
+                ->from('EagleAdminBundle:Sells', 's')
+                ->groupBy('s.date');
+
+        $sold = $qb->getQuery()->getResult();
+
+
+
+        if ($sold != null) {
+            foreach ($sold as $value) {
+                if (date("Y") == substr($value['date'], 6, 4)) {
+                    $monthTotal[substr($value['date'], 3, 2)] += $value['1'];
+                } elseif ((int) date("Y") - 1 == substr($value['date'], 6, 4)) {
+                    $monthTotal2[substr($value['date'], 3, 2)] += $value['1'];
+                }
+            }
+        }
+
+        // Get this year sales
+        $chartval = '[';
+        foreach (range(1, count($monthTotal)) as $number) {
+            $chartval .= $monthTotal[sprintf("%02d", $number)];
+
+            if ($number != 12) {
+                $chartval .= ',';
+            }
+        }
+        $this_year = $chartval . ']';
+
+        $chartval2 = '[';
+        foreach (range(1, count($monthTotal2)) as $number) {
+            $chartval2 .= $monthTotal2[sprintf("%02d", $number)];
+
+            if ($number != 12) {
+                $chartval2 .= ',';
+            }
+        }
+        $last_year = $chartval2 . ']';
+//        /Get this year and last year sold products       
+        
+        //        Get chart values
+        $prods = array();
+        $monthTotal3 = 0;
+        $sellsTotal = 0;
+        $chartval3 = '';
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s.date, sum(s.quantity)')
+                ->from('EagleAdminBundle:Sells', 's')
+                ->groupBy('s.date');
+
+        $sold = $qb->getQuery()->getResult();
+
+        if ($sold != null) {
+            foreach ($sold as $value) {
+                $sellsTotal += $value['1'];
+                if (date('m') == substr($value['date'], 3, 2)) {
+                    $prods[substr($value['date'], 0, 2)] = $value['1'];
+                    $monthTotal3 += $value['1'];
+                }
+            }
+        }
+
+        $chartval3 = '[';
+        foreach (range(1, date('j')) as $number) {
+            if (array_key_exists(sprintf("%02d", $number), $prods)) {
+                $chartval3 .= $prods[sprintf("%02d", $number)];
+            } else {
+                $chartval3 .=  '0';
+            }
+
+            if ($number != 31) {
+                $chartval3 .= ',';
+            }
+        }
+        $this_month = $chartval3 . ']';
+//        /Get chart values
+//        echo $chartval3;
+//        exit();
+        
+
+        $html = $this->renderView('EagleAdminBundle:dashboard:report.html.twig', array(
+            'this_month' => $this_month,
+            'summery' => $this->summery(),
+            'last_year' => $last_year,
+            'this_year' => $this_year
+        ));
+
+
+        return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
+                    'images' => true,
+                    'enable-javascript' => true,
+                    'javascript-delay' => 5000
+                )), 200, array(
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="report.pdf"'
+                )
+        );
+    }
+
     public function mostSold() {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $qb = $em->createQueryBuilder();
@@ -215,15 +360,15 @@ class dashboardController extends Controller {
 
         $sold = $qb->getQuery()->getResult();
 
-        
+
 
         if ($sold != null) {
             foreach ($sold as $value) {
                 if (date("Y") == substr($value['date'], 6, 4)) {
                     $monthTotal[substr($value['date'], 3, 2)] += $value['1'];
-                }elseif ((int)date("Y") - 1 == substr($value['date'], 6, 4)) {
-                   $monthTotal2[substr($value['date'], 3, 2)] += $value['1'];
-                }                    
+                } elseif ((int) date("Y") - 1 == substr($value['date'], 6, 4)) {
+                    $monthTotal2[substr($value['date'], 3, 2)] += $value['1'];
+                }
             }
         }
 
@@ -247,7 +392,7 @@ class dashboardController extends Controller {
                 $chartval2 .= ',';
             }
         }
-        $chartval2 = $chartval2 . ']';        
+        $chartval2 = $chartval2 . ']';
 
         return array(
             'chartval' => $chartval,
@@ -381,11 +526,16 @@ class dashboardController extends Controller {
                 ->from('EagleAdminBundle:Sells', 's');
 
         $allSales = $qb->getQuery()->getResult()[0][1];
-        
+        if($allSales == NULL){
+            $allSales = 0;
+        }
+//        echo $allSales;
+//        exit();
+
         return $this->render('EagleAdminBundle:dashboard:rightNow.html.twig', array(
-            'allProducts' => $allProducts,
-            'allCategories' => $allCategories,
-            'allSales' => $allSales,
+                    'allProducts' => $allProducts,
+                    'allCategories' => $allCategories,
+                    'allSales' => $allSales,
         ));
     }
 
