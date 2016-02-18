@@ -115,6 +115,8 @@ class GlobalController extends Controller {
                     'searchText' => $searchText
         ));
     }
+        
+    
 
     /**
      * @Route("/products/cart")

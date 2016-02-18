@@ -114,7 +114,12 @@
                 <!--Product List Starts-->
                 <div class="products_list products_slider">
                     <ul ng-repeat="product in products">
-                        <li> <a class="product_image"><img src="{{ asset('uploads/products/') }}[[ product.imgUrl ]]"/></a>
+                        <li> <a class="product_image">
+                               {# <p ng-show="product.hasOwnProperty('imgUrl')">[[ product.imgUrl ]]</p>
+                                <p ng-hide="product.hasOwnProperty('imgUrl')">fdfds</p>#}
+                                <img ng-show="product.hasOwnProperty('imgUrl')" src="{{ asset('uploads/products/') }}[[ product.imgUrl ]]"/>
+                                <img ng-hide="product.hasOwnProperty('imgUrl')" src="{{ asset('uploads/products/') }}no_priview.jpg"/>
+                            </a>
                             <div class="product_info">
                                 <h3><a href="leisure_detail.html">[[ product.productTitle ]]</a></h3>
                                 <small>[[ product.description ]]</small> </div>
