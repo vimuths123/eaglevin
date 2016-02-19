@@ -109,58 +109,7 @@
                 <nav>
                     <ul class="primary_nav">
                         <li class="active"><a href="/">Home</a></li>
-                        <li><a href="leisure_listing.html">Categories</a>
-                            <!--SUbmenu Starts-->
-                            <ul class="sub_menu">
-                                <li> <a href="#">Latest Caategories</a>
-                                    <ul>
-                                        <li><a href="#">Skirts</a></li>
-                                        <li><a href="#">Shorts</a></li>
-                                        <li><a href="#">Premium Pants</a></li>
-                                        <li><a href="#">Khakis</a></li>
-                                        <li><a href="#">Casual Pants</a></li>
-                                        <li><a href="#">Jeans</a></li>
-                                        <li><a href="#">Outerwear & Blazers</a></li>
-                                    </ul>
-                                </li>
-                                <li> <a href="#">Popular Categories</a>
-                                    <ul>
-                                        <li><a href="#">Sunglasses</a></li>
-                                        <li><a href="#">Scarves</a></li>
-                                        <li><a href="#">Hair Accessories</a></li>
-                                        <li><a href="#">Hats and Gloves</a></li>
-                                        <li><a href="#">Lifestyle</a></li>
-                                        <li><a href="#">Jeans</a></li>
-                                        <li><a href="#">Outerwear & Blazers</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!--SUbmenu Ends-->
-                        </li>
-                        <li><a href="/products">Products</a>
-                            <!--SUbmenu Starts-->
-                            <ul class="sub_menu">
-                                <li> <a href="#">Latest Products</a>
-                                    <ul>
-                                        <li><a href="#">Premium Pants</a></li>
-                                        <li><a href="#">Khakis</a></li>
-                                        <li><a href="#">Casual Pants</a></li>
-                                        <li><a href="#">Jeans</a></li>
-                                        <li><a href="#">Outerwear & Blazers</a></li>
-                                    </ul>
-                                </li>
-                                <li> <a href="#">Popular Products</a>
-                                    <ul>
-                                        <li><a href="#">Sunglasses</a></li>
-                                        <li><a href="#">Scarves</a></li>
-                                        <li><a href="#">Hair Accessories</a></li>
-                                        <li><a href="#">Hats and Gloves</a></li>
-                                        <li><a href="#">Jeans</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!--SUbmenu Ends-->
-                        </li>
+                        {{ render(controller('EagleShopBundle:Global:menuitmes')) }}
                         <li><a href="leisure_listing.html">About Us</a></li>
                         <li><a href="leisure_listing.html">Contact Us</a></li>                  
                     </ul>

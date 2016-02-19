@@ -14,13 +14,38 @@ class GlobalController extends Controller {
 
     public function getLatestProduct($amount) {
         $em = $this->container->get('doctrine.orm.entity_manager');
-
         $qb = $em->createQueryBuilder();
 
         $qb->select('p.id, p.productTitle, p.price, p.description, pi.imgUrl')
                 ->from('EagleShopBundle:Products', 'p')
                 ->leftJoin('EagleShopBundle:ProuctImage', 'pi', \Doctrine\ORM\Query\Expr\Join::WITH, 'pi.productId = p.id')
                 ->orderBy('p.id', 'DESC')
+                ->groupBy('p.id')
+                ->setMaxResults($amount);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getLatestCategory($amount) {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('c')
+                ->from('EagleShopBundle:ProductCategory', 'c')
+                ->orderBy('c.id', 'DESC')
+                ->setMaxResults($amount);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getPopularProducts($amount) {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('p.id, p.productTitle, p.price, p.description, sum(s.quantity) as quantitysum')
+                ->from('EagleShopBundle:Sells', 's')
+                ->leftJoin('EagleShopBundle:Products', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 's.productId = p.id')
+                ->orderBy('quantitysum', 'DESC')
                 ->groupBy('p.id')
                 ->setMaxResults($amount);
 
@@ -115,8 +140,22 @@ class GlobalController extends Controller {
                     'searchText' => $searchText
         ));
     }
-        
-    
+
+    /**
+     * @Route("/menuitmes")
+     * @Template()
+     */
+    public function menuitmesAction() {
+        $latestCategories = $this->getLatestCategory(5);
+        $latestProducts = $this->getLatestProduct(5);
+        $getPopularProducts = $this->getPopularProducts(5);
+
+        return $this->render("EagleShopBundle:global:menuitems.html.twig", array(
+                    'latestCategories' => $latestCategories,
+                    'latestProducts' => $latestProducts,
+                    'getPopularProducts' => $getPopularProducts,
+        ));
+    }
 
     /**
      * @Route("/products/cart")

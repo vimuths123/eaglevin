@@ -1,0 +1,45 @@
+<li>
+    <a href="/products">Categories</a>
+    <!--SUbmenu Starts-->
+    <ul class="sub_menu">
+        <li> <a href="#">Latest Caategories</a>
+            <ul>
+                {% for category in latestCategories%}
+                    <li><a href="/products?category={{ category.id }}">{{ category.catTitle }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li> <a href="#">Popular Categories</a>
+            <ul>
+                <li><a href="#">Sunglasses</a></li>
+                <li><a href="#">Scarves</a></li>
+                <li><a href="#">Hair Accessories</a></li>
+                <li><a href="#">Hats and Gloves</a></li>
+                <li><a href="#">Lifestyle</a></li>
+                <li><a href="#">Jeans</a></li>
+                <li><a href="#">Outerwear & Blazers</a></li>
+            </ul>
+        </li>
+    </ul>
+    <!--SUbmenu Ends-->
+</li>
+<li><a href="/products">Products</a>
+    <!--SUbmenu Starts-->
+    <ul class="sub_menu">
+        <li> <a href="#">Latest Products</a>
+            <ul>
+                {% for product in latestProducts%}
+                    <li><a href="/products/display/{{ product.id }}">{{ product.productTitle }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li> <a href="#">Popular Products</a>
+            <ul>
+                {% for product in getPopularProducts%}
+                    <li><a href="/products/display/{{ product.id }}">{{ product.productTitle }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+    <!--SUbmenu Ends-->
+</li>
