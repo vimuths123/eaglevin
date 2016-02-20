@@ -52,6 +52,21 @@ class GlobalController extends Controller {
         return $qb->getQuery()->getResult();
     }
 
+    public function getPopularCategories($amount) {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('p.id, p.productTitle, p.price, p.description, sum(s.quantity) as quantitysum, pc.catTitle')
+                ->from('EagleShopBundle:Sells', 's')
+                ->leftJoin('EagleShopBundle:Products', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 's.productId = p.id')
+                ->leftJoin('EagleShopBundle:ProductCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'pc.id = p.category')
+                ->orderBy('quantitysum', 'DESC')
+                ->groupBy('pc.id')
+                ->setMaxResults($amount);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getfeaturedProduct($amount) {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
@@ -149,11 +164,13 @@ class GlobalController extends Controller {
         $latestCategories = $this->getLatestCategory(5);
         $latestProducts = $this->getLatestProduct(5);
         $getPopularProducts = $this->getPopularProducts(5);
+        $getPopularCategories = $this->getPopularCategories(5);
 
         return $this->render("EagleShopBundle:global:menuitems.html.twig", array(
                     'latestCategories' => $latestCategories,
                     'latestProducts' => $latestProducts,
                     'getPopularProducts' => $getPopularProducts,
+                    'getPopularCategories' => $getPopularCategories
         ));
     }
 

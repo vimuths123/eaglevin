@@ -110,8 +110,12 @@ $(function () {
         var quantity = $('.qty_' + $(this).attr('pid')).val();
         $.post(urlseg + "cart/update", {pid: $(this).attr('pid'), quantity: quantity}, function (data) {
             setItems(data);
+
+            // Remove all items from Shopping cart table
+            $("#shopping-cart-table").find("tr:gt(0)").remove();
+            cartInner(data);
             $('.cart_price').html('<b>$' + countTotal(data).toFixed(2) + '<b>');
-            createCart(data);
+            createCart(data);           
         });
     });
 
