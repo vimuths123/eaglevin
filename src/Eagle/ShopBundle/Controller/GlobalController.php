@@ -52,6 +52,21 @@ class GlobalController extends Controller {
         return $qb->getQuery()->getResult();
     }
 
+    public function getPopularCategories($amount) {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('p.id, p.productTitle, p.price, p.description, sum(s.quantity) as quantitysum, pc.catTitle')
+                ->from('EagleShopBundle:Sells', 's')
+                ->leftJoin('EagleShopBundle:Products', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 's.productId = p.id')
+                ->leftJoin('EagleShopBundle:ProductCategory', 'pc', \Doctrine\ORM\Query\Expr\Join::WITH, 'pc.id = p.category')
+                ->orderBy('quantitysum', 'DESC')
+                ->groupBy('pc.id')
+                ->setMaxResults($amount);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getfeaturedProduct($amount) {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
@@ -149,11 +164,13 @@ class GlobalController extends Controller {
         $latestCategories = $this->getLatestCategory(5);
         $latestProducts = $this->getLatestProduct(5);
         $getPopularProducts = $this->getPopularProducts(5);
+        $getPopularCategories = $this->getPopularCategories(5);
 
         return $this->render("EagleShopBundle:global:menuitems.html.twig", array(
                     'latestCategories' => $latestCategories,
                     'latestProducts' => $latestProducts,
                     'getPopularProducts' => $getPopularProducts,
+                    'getPopularCategories' => $getPopularCategories
         ));
     }
 
@@ -423,6 +440,50 @@ class GlobalController extends Controller {
                     'related_products' => $related_products,
                     'image_path' => '/bundles/eagleshop/images/'
         ));
+    }
+
+     /**
+     * @Route("/cart/availability")
+     * @Template()
+     */
+    public function ailabilityAction(Request $request) {
+        $session = $this->getRequest()->getSession();
+        $items = $session->get('items');
+
+        if ($items === NULL) {
+            $items = array();
+        }
+
+        $returnString = "Are you sure ?\n";
+
+                
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('p.id, p.quantity')
+                ->from('EagleShopBundle:Products', 'p')
+                ->where($qb->expr()->in('p.id', '?1'))
+                ->setParameter(1, array_keys($items));
+
+
+        foreach ($qb->getQuery()->getResult() as $value) {
+            if($value['quantity'] == 0){
+                $returnString .= $items[$value['id']]['title']." is not available in stock\n";
+                unset($items[$value['id']]);
+            }else if($items[$value['id']]['quantity'] > $value['quantity']){
+                $returnString .= 'Only '.$value['quantity'].'('.$items[$value['id']]['quantity'].' selected) items available for '.$items[$value['id']]['title'].' in stock';
+                $items[$value['id']]['quantity'] = $value['quantity'];
+            }
+        }
+
+        $session->set('items', $items);
+
+        echo $returnString;
+
+        // echo $returnString."only 3(5 selected) items available for poduct 1 \nonly 4(9 selected) items available for poduct 5 \n";
+        exit();
+
+       
     }
 
 }

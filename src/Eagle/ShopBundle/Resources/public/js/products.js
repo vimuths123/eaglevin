@@ -102,7 +102,22 @@ $(function () {
 
 //    Checkout buuton
     $('.checkout').click(function () {
-        window.location.href = urlseg + "products/checkout";
+        $.post(urlseg + "cart/availability", function (data) {
+            if(confirm(data)){
+                 window.location.href = urlseg + "products/checkout";
+             }else{
+                 $.post(urlseg + "cart/viewall", function (data) {
+                    $("#shopping-cart-table").find("tr:gt(0)").remove();
+                    cartInner(data);
+                    setItems(data);
+                    $('.cart_price').html('<b>$' + countTotal(data).toFixed(2) + '<b>');
+                    createCart(data);
+                 });
+             }         
+        });
+        // confirm('only 3(5 selected) items available for poduct 1 \n'+'only 3(5 selected) items available for poduct 2 \n');
+
+       
     });
 
 //     Edit item button    
@@ -110,8 +125,12 @@ $(function () {
         var quantity = $('.qty_' + $(this).attr('pid')).val();
         $.post(urlseg + "cart/update", {pid: $(this).attr('pid'), quantity: quantity}, function (data) {
             setItems(data);
+
+            // Remove all items from Shopping cart table
+            $("#shopping-cart-table").find("tr:gt(0)").remove();
+            cartInner(data);
             $('.cart_price').html('<b>$' + countTotal(data).toFixed(2) + '<b>');
-            createCart(data);
+            createCart(data);           
         });
     });
 

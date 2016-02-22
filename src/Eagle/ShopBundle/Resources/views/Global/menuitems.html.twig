@@ -11,13 +11,9 @@
         </li>
         <li> <a href="#">Popular Categories</a>
             <ul>
-                <li><a href="#">Sunglasses</a></li>
-                <li><a href="#">Scarves</a></li>
-                <li><a href="#">Hair Accessories</a></li>
-                <li><a href="#">Hats and Gloves</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Jeans</a></li>
-                <li><a href="#">Outerwear & Blazers</a></li>
+                {% for category in getPopularCategories%}
+                    <li><a href="/products?category={{ category.id }}">{{ category.catTitle }}</a></li>
+                {% endfor %}
             </ul>
         </li>
     </ul>

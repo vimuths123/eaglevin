@@ -17,6 +17,8 @@
     <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
     <field name="online" type="integer" column="online" nullable="false"/>
+    <field name="quantity" type="integer" column="quantity" nullable="false"/>
+    <field name="sold" type="integer" column="sold" nullable="false"/>
     <many-to-one field="category" target-entity="ProductCategory">
       <join-columns>
         <join-column name="category" referenced-column-name="id"/>

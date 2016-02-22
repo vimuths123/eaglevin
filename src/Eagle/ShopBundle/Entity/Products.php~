@@ -101,16 +101,7 @@ class Products
      */
     private $category;
 
-
-    /**
-     * Set productTitle
-     *
-     * @param string $amount
-     * @return Products
-     */
-    public function getLatestProducts($amount) {
-        
-    }
+ 
 
     /**
      * Set productTitle

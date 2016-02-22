@@ -365,4 +365,60 @@ class Products
     {
         return $this->category;
     }
+    /**
+     * @var integer
+     */
+    private $quantity;
+
+    /**
+     * @var integer
+     */
+    private $sold;
+
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return Products
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set sold
+     *
+     * @param integer $sold
+     * @return Products
+     */
+    public function setSold($sold)
+    {
+        $this->sold = $sold;
+
+        return $this;
+    }
+
+    /**
+     * Get sold
+     *
+     * @return integer 
+     */
+    public function getSold()
+    {
+        return $this->sold;
+    }
 }
