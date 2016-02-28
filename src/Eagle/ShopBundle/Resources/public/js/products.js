@@ -60,6 +60,26 @@ function cartInner(array) {
 //{"166":{"quantity":"1","price":"7"},"165":{"quantity":"1","price":"7"}}
 
 $(function () {
+    $('#contact-us').validate({
+            rules: {
+                    contactName: "required",
+                    email: {
+                        required: true,
+                        email: true
+                    }    
+            }
+    });
+
+    $("#contact-us").on('submit', function(e){
+            var isvalidate=$("#contact-us").valid();
+            if(isvalidate){
+                    e.preventDefault();
+                    $.post(urlseg + "sendMail", {name: $('#contactName').val(), email: $('#email').val(), comments: $('#commentsText').val()}, function (data) {
+                        alert(data);
+                    });
+            }
+    });
+
     $.post(urlseg + "cart/viewall", function (data) {
         cartInner(data);
         setItems(data);
@@ -102,7 +122,7 @@ $(function () {
 
 //    Checkout buuton
     $('.checkout').click(function () {
-        $.post(urlseg + "cart/availability", function (data) {
+        $.post(urlseg + "cart/ailability", function (data) {
             if(confirm(data)){
                  window.location.href = urlseg + "products/checkout";
              }else{
