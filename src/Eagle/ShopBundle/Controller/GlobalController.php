@@ -443,7 +443,7 @@ class GlobalController extends Controller {
     }
 
      /**
-     * @Route("/cart/availability")
+     * @Route("/cart/ailability")
      * @Template()
      */
     public function ailabilityAction(Request $request) {
@@ -486,4 +486,48 @@ class GlobalController extends Controller {
        
     }
 
+    /**
+     * @Route("/contact")
+     * @Template()
+     */
+    public function contactAction() {
+        return $this->render("EagleShopBundle:global:contact.html.twig", array(
+                    'image_path' => '/bundles/eagleshop/images/'
+        ));
+    }
+
+    /**
+     * @Route("/sendMail")
+     * @Template()
+     */
+    public function sendMailAction() {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $comments = $_POST['comments'];
+
+        $message = \Swift_Message::newInstance()
+        ->setSubject('Contact')
+        ->setFrom('vimuthtweet@gmail.com')
+        ->setTo('vimuthtweet@gmail.com')
+        ->setBody(
+            $this->renderView(
+                'EagleShopBundle:global:mail.html.twig',
+                 array(
+                     'name' => $name,
+                     'email' => $email,
+                     'comments' => $comments
+                 )               
+            ), 
+            'text/html'
+        );      
+        $this->get('mailer')->send($message);  
+
+        return new Response("Email sent successfully");  
+
+        // return $this->render("EagleShopBundle:global:mail.html.twig", array(
+        //              'name' => $name,
+        //              'email' => $email,
+        //              'comments' => $comments
+        // ));
+    }
 }
