@@ -68,10 +68,10 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: gmail
+    host:      smtp.gmail.com
+    username:  'vimuthtweet@gmail.com'
+    password:  'vimuthtweet1'
     spool:     { type: memory }
 
 services:
@@ -80,3 +80,13 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" 
+        options:    []
+    image:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" 
