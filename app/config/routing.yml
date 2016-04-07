@@ -11,3 +11,17 @@ eagle_shop:
 app:
     resource: @AppBundle/Controller/
     type:     annotation
+
+eagle_admin_admin_user:
+    resource: "@EagleAdminBundle/Resources/config/routing/user.yml"
+    prefix:   /admin/user
+    
+login:
+    path: /login
+    defaults: { _controller: EagleAdminBundle:Security:login }
+
+login_check:
+    path: /login_check
+
+logout:
+    pattern: /logout    

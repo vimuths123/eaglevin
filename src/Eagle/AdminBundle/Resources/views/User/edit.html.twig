@@ -1,0 +1,23 @@
+{% extends '::admin_base.html.twig' %}
+
+{% block body -%}
+    <style>
+        #eagle_adminbundle_user_submit{
+            margin-top: 10px;
+        }
+    </style>
+    <div style="padding-top: 20px; padding-left: 231px;">
+    <h1>User edit</h1>
+
+    {{ form(edit_form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_user') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+    </div>
+{% endblock %}

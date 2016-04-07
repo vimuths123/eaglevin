@@ -17,14 +17,7 @@ class productCategoriesController extends Controller {
      * @Route("productCategories/add")
      * @Template()
      */
-    public function addAction() {
-        $session = $this->getRequest()->getSession();
-        $user = $session->get('user');
-        
-        if ($user === NULL) {
-            return $this->redirect('/login', 301);
-        }
-        
+    public function addAction() {       
 //        get All product categories
         $repository = $this->getDoctrine()
                 ->getRepository('EagleAdminBundle:ProductCategory');
@@ -39,14 +32,7 @@ class productCategoriesController extends Controller {
      * @Route("productCategories/view")
      * @Template()
      */
-    public function viewAction() {
-        $session = $this->getRequest()->getSession();
-        $user = $session->get('user');
-        
-        if ($user === NULL) {
-            return $this->redirect('/login', 301);
-        }
-        
+    public function viewAction() {               
         return $this->render("EagleAdminBundle:productCategories:view.html.twig");
     }
 
@@ -323,13 +309,6 @@ class productCategoriesController extends Controller {
      * @Template()
      */
     public function updateAction($id) {
-        $session = $this->getRequest()->getSession();
-        $user = $session->get('user');
-        
-        if ($user === NULL) {
-            return $this->redirect('/login', 301);
-        }
-        
         //        get All product categories
         $repository = $this->getDoctrine()
                 ->getRepository('EagleAdminBundle:ProductCategory');

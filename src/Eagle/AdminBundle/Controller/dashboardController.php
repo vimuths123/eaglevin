@@ -17,13 +17,6 @@ class dashboardController extends Controller {
      * @Template()
      */
     public function indexAction() {
-        $session = $this->getRequest()->getSession();
-        $user = $session->get('user');
-
-        if ($user === NULL) {
-            return $this->redirect('/login', 301);
-        }
-
         return $this->render("EagleAdminBundle:dashboard:index.html.twig", array(
                     'monthChart' => $this->monthChart(),
                     'summery' => $this->summery(),
@@ -113,7 +106,6 @@ class dashboardController extends Controller {
         }
         $last_year = $chartval2 . ']';
 //        /Get this year and last year sold products       
-        
         //        Get chart values
         $prods = array();
         $monthTotal3 = 0;
@@ -144,7 +136,7 @@ class dashboardController extends Controller {
             if (array_key_exists(sprintf("%02d", $number), $prods)) {
                 $chartval3 .= $prods[sprintf("%02d", $number)];
             } else {
-                $chartval3 .=  '0';
+                $chartval3 .= '0';
             }
 
             if ($number != 31) {
@@ -155,7 +147,7 @@ class dashboardController extends Controller {
 //        /Get chart values
 //        echo $chartval3;
 //        exit();
-        
+
 
         $html = $this->renderView('EagleAdminBundle:dashboard:report.html.twig', array(
             'this_month' => $this_month,
@@ -203,10 +195,12 @@ class dashboardController extends Controller {
 
         if (sizeof($qb->getQuery()->getResult()) > 0) {
             foreach ($qb->getQuery()->getResult() as $key => $value) {
-                $jsonArray[$key] = array(
-                    'label' => $value['productTitle'],
-                    'data' => (int) $value['mcount']
-                );
+                if ($key < $minProds) {
+                    $jsonArray[$key] = array(
+                        'label' => $value['productTitle'],
+                        'data' => (int) $value['mcount']
+                    );
+                }
             }
         }
 
@@ -435,68 +429,68 @@ class dashboardController extends Controller {
         return new Response($jsonArray);
     }
 
-    /**
-     * @Route("/login")
-     * @Template()
-     */
-    public function loginAction(Request $request) {
-        // create a task and give it some dummy data for this example
-        $task = new Task();
-        $form = $this->createFormBuilder($task)
-                ->add('username', 'text')
-                ->add('password', 'password')
-                ->add('save', 'submit', array('label' => 'Login'))
-                ->getForm();
+//    /**
+//     * @Route("/login")
+//     * @Template()
+//     */
+//    public function loginAction(Request $request) {
+//        // create a task and give it some dummy data for this example
+//        $task = new Task();
+//        $form = $this->createFormBuilder($task)
+//                ->add('username', 'text')
+//                ->add('password', 'password')
+//                ->add('save', 'submit', array('label' => 'Login'))
+//                ->getForm();
+//
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+////            Hardcoded username and password
+//            $username = 'admin';
+//            $password = 'admin123';
+//
+//
+//            if ($task->getUsername() == $username) {
+//                if ($task->getPassword() == $password) {
+//
+//                    $session = $this->getRequest()->getSession();
+//                    $user = array(
+//                        'username' => $username,
+//                        'password' => $password
+//                    );
+//                    $session->set('user', $user);
+//
+//
+//                    return $this->redirect('dashboard/index', 301);
+//                } else {
+//                    $error = new FormError("You'r password is wrong");
+//                    $form->get('password')->addError($error);
+//                }
+//            } else {
+//                $error = new FormError("The user doesn't exist");
+//                $form->get('username')->addError($error);
+//            }
+//
+//
+////            return $this->redirectToRoute('task_success');
+//        }
+//
+//        return $this->render("EagleAdminBundle:dashboard:login.html.twig", array(
+//                    'form' => $form->createView(),
+//        ));
+//    }
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-//            Hardcoded username and password
-            $username = 'admin';
-            $password = 'admin123';
-
-
-            if ($task->getUsername() == $username) {
-                if ($task->getPassword() == $password) {
-
-                    $session = $this->getRequest()->getSession();
-                    $user = array(
-                        'username' => $username,
-                        'password' => $password
-                    );
-                    $session->set('user', $user);
-
-
-                    return $this->redirect('dashboard/index', 301);
-                } else {
-                    $error = new FormError("You'r password is wrong");
-                    $form->get('password')->addError($error);
-                }
-            } else {
-                $error = new FormError("The user doesn't exist");
-                $form->get('username')->addError($error);
-            }
-
-
-//            return $this->redirectToRoute('task_success');
-        }
-
-        return $this->render("EagleAdminBundle:dashboard:login.html.twig", array(
-                    'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * @Route("/logout")
-     * @Template()
-     */
-    public function logoutAction() {
-        $session = $this->getRequest()->getSession();
-        $session->remove('user');
-
-        return $this->redirect('/login', 301);
-    }
+//    /**
+//     * @Route("/logout")
+//     * @Template()
+//     */
+//    public function logoutAction() {
+//        $session = $this->getRequest()->getSession();
+//        $session->remove('user');
+//
+//        return $this->redirect('/login', 301);
+//    }
 
     /**
      * @Route("/rightNow")
@@ -526,7 +520,7 @@ class dashboardController extends Controller {
                 ->from('EagleAdminBundle:Sells', 's');
 
         $allSales = $qb->getQuery()->getResult()[0][1];
-        if($allSales == NULL){
+        if ($allSales == NULL) {
             $allSales = 0;
         }
 //        echo $allSales;

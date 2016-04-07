@@ -21,15 +21,7 @@ class productsController extends Controller {
      * @Route("products/add")
      * @Template()
      */
-    public function addAction() {
-        $session = new Session();
-
-        $user = $session->get('user');
-
-        if ($user == null) {
-            return $this->redirect('/login', 301);
-        }
-        
+    public function addAction() {       
 //        get All product categories
         $repository = $this->getDoctrine()
                 ->getRepository('EagleAdminBundle:ProductCategory');
@@ -117,16 +109,7 @@ class productsController extends Controller {
      * @Route("products/view")
      * @Template()
      */
-    public function viewAction() {
-
-        $session = new Session();
-
-        $user = $session->get('user');
-
-        if ($user == null) {
-            return $this->redirect('/login', 301);
-        }
-
+    public function viewAction() {      
         //        get All product categories
         $repository = $this->getDoctrine()
                 ->getRepository('EagleAdminBundle:ProductCategory');
@@ -443,15 +426,7 @@ class productsController extends Controller {
      * @Route("products/update/{id}")
      * @Template()
      */
-    public function updateAction($id) {
-        $session = new Session();
-
-        $user = $session->get('user');
-
-        if ($user == null) {
-            return $this->redirect('/login', 301);
-        }
-        
+    public function updateAction($id) {        
         //        Get product by ID
         $repository = $this->getDoctrine()
                 ->getRepository('EagleAdminBundle:Products');

@@ -1,0 +1,4 @@
+eagle_admin_admin_user:
+    resource: "@EagleAdminBundle/Resources/config/routing/user.yml"
+    prefix:   /admin/user
+

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link href='http://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'>
+
+        <style>
+            {#.loginPage .navbar .brand{
+                float: left !important;
+            }#}
+
+            .resBtn{
+                left: 200px !important;
+                position: absolute;
+                top: 14px !important;
+                z-index: 1000;
+            }
+            
+            .customSave{
+                padding-left: 30px !important;
+            }
+        </style>
+
+        {% stylesheets 
+            'bundles/eagleadmin/css/bootstrap/bootstrap.min.css'
+            'bundles/eagleadmin/css/bootstrap/bootstrap-responsive.min.css'
+            'bundles/eagleadmin/css/bootstrap/jasny-bootstrap.css'
+            filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets 'bundles/eagleadmin/css/supr-theme/jquery.ui.supr.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}        
+
+        {% stylesheets 'bundles/eagleadmin/css/icons.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets 
+            'bundles/eagleadmin/plugins/qtip/jquery.qtip.css'
+            'bundles/eagleadmin/plugins/fullcalendar/fullcalendar.css'
+            'bundles/eagleadmin/plugins/jpages/jPages.css'
+            'bundles/eagleadmin/plugins/prettify/prettify.css'
+            'bundles/eagleadmin/plugins/inputlimiter/jquery.inputlimiter.css'
+            'bundles/eagleadmin/plugins/ibutton/jquery.ibutton.css'
+            'bundles/eagleadmin/plugins/uniform/uniform.default.css'
+            'bundles/eagleadmin/plugins/color-picker/color-picker.css'
+            'bundles/eagleadmin/plugins/select/select2.css'
+            'bundles/eagleadmin/plugins/validate/validate.css'
+            'bundles/eagleadmin/plugins/pnotify/jquery.pnotify.default.css'
+            'bundles/eagleadmin/plugins/pretty-photo/prettyPhoto.css'
+            'bundles/eagleadmin/plugins/smartWizzard/smart_wizard.css'
+            'bundles/eagleadmin/plugins/dataTables/jquery.dataTables.css'
+            'bundles/eagleadmin/plugins/elfinder/elfinder.css'
+            'bundles/eagleadmin/plugins/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css'
+            'bundles/eagleadmin/plugins/search/tipuesearch.css'
+            'bundles/eagleadmin/plugins/tokeninput/token-input-facebook.css'
+            'bundles/eagleadmin/plugins/tokeninput/token-input.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets 'bundles/eagleadmin/css/main.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+
+
+        {# {% javascripts 'bundles/eagleshop/js/*' %}
+         <script src="{{ asset_url }}"></script>
+         {% endjavascripts %}#}
+
+        <link href="{{asset('bundles/eagleshop/css/base.css')}}"/>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body class="loginPage">
+
+        <div class="container-fluid">
+
+            <div id="header">
+
+                <div class="row-fluid">
+
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="container">
+                                <a class="brand" href="dashboard.html">Supr.<span class="slogan">admin</span></a>
+                            </div>
+                        </div><!-- /navbar-inner -->
+                    </div><!-- /navbar -->
+
+
+                </div><!-- End .row-fluid -->
+
+            </div><!-- End #header -->
+
+        </div><!-- End .container-fluid -->    
+
+        <div class="container-fluid">
+
+            <div class="loginContainer">
+                
+                {% if error %}
+                    <div style="margin-top: 20px; color: red;">{{ error.message }}</div>
+                {% endif %}
+
+                <form action="{{ path('login_check') }}" method="post" class="form-horizontal">
+                    <div class="form-row row-fluid">
+                        <div class="span12">
+                            <div class="row-fluid">
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" name="_username" />
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="form-row row-fluid">
+                        <div class="span12">
+                            <div class="row-fluid">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="_password" />
+                            </div>
+                        </div>
+                    </div>    
+                    
+                    <div class="form-row row-fluid">                       
+                        <div class="span12">
+                            <div class="row-fluid">
+                                <div class="form-actions">
+                                    <div class="span12 controls" style="padding-right: 8px;">
+                                        <input type="checkbox" id="remember_me" class="styled" name="_remember_me" checked/> Keep me logged in
+                                        <button type="submit" class="btn btn-info right customSave">login</button>
+                                        <span class="icon16 icomoon-icon-enter white" style="float: right; position: absolute; top: 28px; right: 51px;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    
+                    
+
+{#                    <button type="submit">login</button>#}
+                </form>            
+               
+                
+                
+                
+            </div>
+
+        </div>
+
+
+        {% block javascripts %}
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+            {% javascripts
+    '@EagleAdminBundle/Resources/public/js/bootstrap/bootstrap.js'
+    '@EagleAdminBundle/Resources/public/js/bootstrap/jasny-bootstrap.min.js'
+    '@EagleAdminBundle/Resources/public/js/jquery.cookie.js'
+    '@EagleAdminBundle/Resources/public/js/jquery.mousewheel.js'
+    '@EagleAdminBundle/Resources/public/plugins/qtip/jquery.qtip.min.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            {% javascripts 
+    '@EagleAdminBundle/Resources/public/plugins/flot/jquery.flot.js' 
+    '@EagleAdminBundle/Resources/public/plugins/flot/*' 
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+
+            {% javascripts
+    '@EagleAdminBundle/Resources/public/plugins/sparkline/jquery.sparkline.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/knob/jquery.knob.js'
+    '@EagleAdminBundle/Resources/public/plugins/fullcalendar/fullcalendar.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/prettify/prettify.js'
+    '@EagleAdminBundle/Resources/public/plugins/watermark/jquery.watermark.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/elastic/jquery.elastic.js'
+    '@EagleAdminBundle/Resources/public/plugins/inputlimiter/jquery.inputlimiter.1.3.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/maskedinput/jquery.maskedinput-1.3.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/ibutton/jquery.ibutton.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/uniform/jquery.uniform.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/stepper/ui.stepper.js'
+    '@EagleAdminBundle/Resources/public/plugins/color-picker/colorpicker.js'
+    '@EagleAdminBundle/Resources/public/plugins/timeentry/jquery.timeentry.min.js'  
+    '@EagleAdminBundle/Resources/public/plugins/select/select2.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/dualselect/jquery.dualListBox-1.3.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/tiny_mce/jquery.tinymce.js'
+    '@EagleAdminBundle/Resources/public/plugins/validate/jquery.validate.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/search/tipuesearch_set.js'
+    '@EagleAdminBundle/Resources/public/plugins/search/tipuesearch_data.js'
+    '@EagleAdminBundle/Resources/public/plugins/animated-progress-bar/jquery.progressbar.js'  
+    '@EagleAdminBundle/Resources/public/plugins/pnotify/jquery.pnotify.min.js'  
+    '@EagleAdminBundle/Resources/public/plugins/lazy-load/jquery.lazyload.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/jpages/jPages.min.js'  
+    '@EagleAdminBundle/Resources/public/plugins/pretty-photo/jquery.prettyPhoto.js'
+    '@EagleAdminBundle/Resources/public/plugins/smartWizzard/jquery.smartWizard-2.0.min.js' 
+    '@EagleAdminBundle/Resources/public/plugins/ios-fix/ios-orientationchange-fix.js'
+    '@EagleAdminBundle/Resources/public/plugins/dataTables/jquery.dataTables.min.js' 
+    '@EagleAdminBundle/Resources/public/plugins/elfinder/elfinder.min.js'
+    '@EagleAdminBundle/Resources/public/plugins/plupload/plupload.js'
+    '@EagleAdminBundle/Resources/public/plugins/plupload/plupload.html4.js'
+    '@EagleAdminBundle/Resources/public/plugins/plupload/jquery.plupload.queue/jquery.plupload.queue.js'
+    '@EagleAdminBundle/Resources/public/plugins/responsive-tables/responsive-tables.js'
+    '@EagleAdminBundle/Resources/public/js/statistic.js'
+    '@EagleAdminBundle/Resources/public/plugins/tokeninput/jquery.tokeninput.js'
+    '@EagleAdminBundle/Resources/public/js/add_product.js'
+    '@EagleAdminBundle/Resources/public/js/categories.js'
+    '@EagleAdminBundle/Resources/public/js/bootstrap-paginator.js'
+    '@EagleAdminBundle/Resources/public/js/checklist-model.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+
+
+
+            {% javascripts
+    '@EagleAdminBundle/Resources/public/plugins/touch-punch/jquery.ui.touch-punch.min.js'
+    '@EagleAdminBundle/Resources/public/js/main.js'
+            %}
+            <script src="{{ asset_url }}"></script>           
+
+            {% endjavascripts %}
+        {% endblock %}
+
+    </body>
+</html>

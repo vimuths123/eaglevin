@@ -1,12 +1,42 @@
 security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Eagle\AdminBundle\Entity\User: bcrypt
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
     providers:
-        in_memory:
-            memory: ~
-
+        chain_provider:
+            chain:
+                providers: [user_db]
+        user_db:
+            entity: { class: EagleAdminBundle:User, property: username }
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        default:
-            anonymous: ~
+        main:
+            pattern: /.*
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                default_target_path: /dashboard/index
+            logout:
+                path: /logout
+                target: /login
+            security: true
+            anonymous: true
+            remember_me:
+                key:      '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+            
+            
+    access_control:
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /dashboard/index, roles: ROLE_USER }
+        - { path: /products/add, roles: ROLE_USER }
+        - { path: /products/view, roles: ROLE_USER }
+        - { path: /products/update/.*, roles: ROLE_USER }
+        - { path: /productCategories/add, roles: ROLE_USER }
+        - { path: /productCategories/view, roles: ROLE_USER }
+        - { path: /productCategories/update/.*, roles: ROLE_USER }  
+        - { path: /admin/user/profile/, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }       
+        - { path: /admin/.*, roles: ROLE_ADMIN }       
+        - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -108,10 +108,10 @@
                 <!--Navigation Starts-->
                 <nav>
                     <ul class="primary_nav">
-                        <li class="active"><a href="/">Home</a></li>
+                        <li id="homeMenu"><a href="/">Home</a></li>
                         {{ render(controller('EagleShopBundle:Global:menuitmes')) }}
                         <li><a href="leisure_listing.html">About Us</a></li>
-                        <li><a href="leisure_listing.html">Contact Us</a></li>                  
+                        <li id="contactMenu"><a href="/contact">Contact Us</a></li>                  
                     </ul>
                     <div class="minicart"> <a href="#" class="minicart_link" > <span class="item cart_quantity"><b>0</b> ITEM</span> <span class="item"> / </span> <span class="price cart_price"><b>$00.00</b></span> </a>
                         <div class="cartHolder">
