@@ -1,8 +1,8 @@
 {% extends '::admin_base.html.twig' %}
 
 {% block body -%}
-    <div style="padding-top: 20px; padding-left: 231px;">
-    <h1>User</h1>
+    {#    <div style="padding-top: 20px; padding-left: 231px;">#}
+    {#<h1>User</h1>
 
     <table class="record_properties">
         <tbody>
@@ -15,6 +15,10 @@
                 <td>{{ entity.password }}</td>
             </tr>
             <tr>
+                <th>Email</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+            <tr>
                 <th>Isadmin</th>
                 <td>{{ entity.isAdmin }}</td>
             </tr>
@@ -23,20 +27,98 @@
                 <td>{{ entity.id }}</td>
             </tr>
         </tbody>
-    </table>
+    </table>#}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_user') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
-</div>    
+    <div id="content" class="clearfix">
+        <div class="contentwrapper"><!--Content wrapper-->
+
+            <div class="heading">
+
+                <h3>User</h3>                    
+
+                <div class="resBtnSearch">
+                    <a href="#"><span class="icon16 brocco-icon-search"></span></a>
+                </div>
+
+                <div class="search">
+
+
+
+                </div><!-- End search -->
+
+            </div><!-- End .heading-->
+            <div>
+                <div class="row-fluid">
+
+                    <div class="span4">
+
+                        <div class="reminder">
+                            <h4>{{ entity.username }}'s details 
+                                <a href="#" class="icon tip" title="Configure"><span class="icon16 iconic-icon-cog"></span></a>
+                            </h4>
+                            <ul>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 entypo-icon-users gray"></span>
+                                    </div>
+                                    <span class="number"></span> 
+                                    <span class="txt">Username : {{ entity.username }}</span>
+{#                                    <a class="btn btn-warning">go</a>#}
+                                </li>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 entypo-icon-email red"></span>
+                                    </div>
+                                    <span class="number"></span> 
+                                    <span class="txt">Email : {{ entity.email }} </span>
+{#                                    <a class="btn btn-warning">go</a>#}
+                                </li>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 brocco-icon-pencil green"></span>
+                                    </div>
+                                    <span class="number"></span> 
+                                    <span class="txt">Password : {{ entity.password | slice(0, 30)}}.... </span>
+{#                                    <a class="btn btn-warning">go</a>#}
+                                </li>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 icomoon-icon-key-2 blue"></span>
+                                    </div>
+                                    <span class="number"></span> 
+                                    <span class="txt">User role : {{ (entity.isAdmin == 1) ? 'Admin' : 'Normal user' }}</span> 
+{#                                    <a class="btn btn-warning">go</a>#}
+                                </li>
+                                <li class="clearfix">
+                                    <div class="icon">
+                                        <span class="icon32 brocco-icon-user dark"></span>
+                                    </div>
+                                    <span class="number"></span> 
+                                    <span class="txt">User ID : {{ entity.id }}</span>
+{#                                    <a class="btn btn-warning">go</a>#}
+                                </li>                                   
+                            </ul>
+                        </div><!-- End .reminder -->
+
+                    </div><!-- End .span4 -->
+                </div>
+
+                <ul class="record_actions">
+                    <li>
+                        <a class="" href="{{ path('admin_user') }}">
+                            Back to the list
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                            Edit
+                        </a>
+                    </li>
+                    <li>{{ form(delete_form) }}</li>
+                </ul>
+            </div>    
+        </div>
+    </div>
+
+
 {% endblock %}

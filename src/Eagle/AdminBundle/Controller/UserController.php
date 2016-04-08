@@ -136,7 +136,9 @@ class UserController extends Controller {
     public function profileAction($id) {
         
 //        Prevent non admin users from accesssing others profiles
-        if ($this->get('security.context')->isGranted('ROLE_USER')) {
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            
+        }else{
             $user = $this->getUser();
             if ($id != $user->getId()) {
                 throw $this->createAccessDeniedException('Access denied.');
@@ -165,6 +167,8 @@ class UserController extends Controller {
             'action' => $this->generateUrl('admin_user_profile', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
+        
+        $form->remove('is_admin');
 
         $form->add('submit', 'submit', array(
             'label' => 'Update',

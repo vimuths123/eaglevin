@@ -22,6 +22,11 @@ class User implements UserInterface
 
     /**
      * @var string
+     */    
+    private $email;
+    
+    /**
+     * @var string
      */
     private $isAdmin;
 
@@ -52,6 +57,29 @@ class User implements UserInterface
     public function getUsername()
     {
         return $this->username;
+    }
+    
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->username = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**
@@ -115,7 +143,7 @@ class User implements UserInterface
     }
 
     public function getRoles() {
-        if($this->isAdmin == 1){
+        if($this->isAdmin == 1){            
             return array('ROLE_ADMIN');
         }else{
             return array('ROLE_USER');

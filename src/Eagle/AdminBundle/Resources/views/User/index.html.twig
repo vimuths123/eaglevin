@@ -88,6 +88,7 @@
                                         <th>#</th>
                                         <th>Username</th>
                                         <th>Password</th>
+                                        <th>Email</th>
                                         <th>User Role</th>
                                         <th>Actions</th>
                                     </tr>
@@ -98,6 +99,8 @@
                                             <td>{{ entity.id }}</td>
                                             <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
                                             <td>{{ entity.password }}</td>
+                                            <td>{{ entity.email }}</td>
+{#                                            <td>{{ entity.email }}</td>#}
                                             <td>{{ (entity.isAdmin == '1') ? 'Admin' : 'Normal User' }}</td>                                            
                                             <td>
                                                 <div class="controls center">
