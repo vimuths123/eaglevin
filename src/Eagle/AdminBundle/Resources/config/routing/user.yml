@@ -28,6 +28,11 @@ admin_user_update:
     defaults: { _controller: "EagleAdminBundle:User:update" }
     methods:  [POST, PUT]
 
+admin_user_profileupdate:
+    path:     /{id}/profileupdate
+    defaults: { _controller: "EagleAdminBundle:User:profileupdate" }
+    methods:  [POST, PUT]
+
 admin_user_delete:
     path:     /{id}/delete
     defaults: { _controller: "EagleAdminBundle:User:delete" }
