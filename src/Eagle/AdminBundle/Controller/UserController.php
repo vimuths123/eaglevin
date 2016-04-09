@@ -164,7 +164,7 @@ class UserController extends Controller {
     
     private function profileEditForm(User $entity) {
         $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('admin_user_profile', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('admin_user_profileupdate', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
         
@@ -226,6 +226,35 @@ class UserController extends Controller {
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Edits an existing User entity.
+     *
+     */
+    public function profileupdateAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('EagleAdminBundle:User')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+        // $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->profileEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_user_profile', array('id' => $entity->getId())));
+        }
+
+        return $this->render('EagleAdminBundle:User:profile.html.twig', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
         ));
     }
 
